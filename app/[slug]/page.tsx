@@ -14,7 +14,10 @@ type Props = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return [...guides.map((guide) => ({ slug: guide.slug })), ...apiReferences.map((api) => ({ slug: api.slug }))];
+  return [
+    ...guides.map((guide) => ({ slug: guide.slug })),
+    ...apiReferences.map((api) => ({ slug: api.slug })),
+  ];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -43,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function GuidePage({ params }: Props) {
+export default async function GuideOrApiPage({ params }: Props) {
   const { slug } = await params;
   const api = getApiInfo(slug);
   if (api) return <ApiOverview slug={slug} />;
@@ -52,18 +55,18 @@ export default async function GuidePage({ params }: Props) {
   if (!guide) notFound();
 
   return (
-    <DocsChrome currentPath={`/${guide.slug}/`}>
-      <div className="page-wrap page-wrap-narrow">
-        <article className="prose-docs min-w-0">
-          <h1>{guide.title}</h1>
-          <p className="hero-lede">{guide.intro}</p>
+    <DocsChrome>
+      <div className="he-page he-page-narrow">
+        <article>
+          <h1 className="he-title">{guide.title}</h1>
+          <p className="he-lede">{guide.intro}</p>
 
           {guide.sections.map((section) => (
             <section id={section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')} key={section.title}>
-              <h2>{section.title}</h2>
-              <div className="space-y-5">
+              <h2 className="he-section-title">{section.title}</h2>
+              <div className="grid gap-3">
                 {section.items.map((item) => (
-                  <div key={item.heading}>
+                  <div className="he-card" key={item.heading}>
                     <h3>{item.heading}</h3>
                     <p>{item.body}</p>
                   </div>
@@ -85,40 +88,32 @@ function ApiOverview({ slug }: { slug: string }) {
   const tags = Array.from(new Set(operations.flatMap((operation) => operation.tags))).filter(Boolean);
 
   return (
-    <DocsChrome currentApi={slug} currentPath={`/${slug}/`}>
-      <div className="page-wrap">
-        <section className="prose-docs">
-          <div className="eyebrow">{info.group}</div>
-          <h1>{info.title}</h1>
-          <p className="hero-lede">{info.description}</p>
-          <div className="hero-actions">
-            <a
-              className="focus-ring button-primary"
-              href={info.rapidApiUrl}
-              rel="noreferrer"
-              target="_blank"
-            >
-              Open on RapidAPI <ExternalLink aria-hidden="true" className="nav-icon" />
+    <DocsChrome>
+      <div className="he-page">
+        <section>
+          <div className="he-eyebrow">{info.group}</div>
+          <h1 className="he-title">{info.title}</h1>
+          <p className="he-lede">{info.description}</p>
+          <div className="he-actions">
+            <a className="he-button-primary" href={info.rapidApiUrl} rel="noreferrer" target="_blank">
+              Open on RapidAPI <ExternalLink aria-hidden="true" className="size-4" />
             </a>
-            <a
-              className="focus-ring button-secondary"
-              href={`/openapi/${slug}.json`}
-            >
+            <a className="he-button-secondary" href={`/openapi/${slug}.json`}>
               OpenAPI JSON
             </a>
           </div>
         </section>
 
-        <div className="fact-grid">
+        <div className="he-stats">
           <Fact label="Version" value={info.version} />
           <Fact label="Server" value={info.serverUrl} />
           <Fact label="Endpoints" value={String(operations.length)} />
         </div>
 
         {tags.length ? (
-          <div className="tag-row">
+          <div className="he-tags">
             {tags.map((tag) => (
-              <span className="tag-pill" key={tag}>
+              <span className="he-tag" key={tag}>
                 {tag}
               </span>
             ))}
@@ -126,19 +121,15 @@ function ApiOverview({ slug }: { slug: string }) {
         ) : null}
 
         <section>
-          <h2 className="section-title">Endpoints</h2>
-          <div className="endpoint-grid">
+          <h2 className="he-section-title">Endpoints</h2>
+          <div className="he-endpoint-grid">
             {operations.map((operation) => (
-              <Link
-                className="focus-ring endpoint-card"
-                href={`/${operation.apiSlug}/${operation.slug}/`}
-                key={`${operation.method}-${operation.path}`}
-              >
-                <div className="endpoint-card-title">
-                  {operation.summary}
+              <Link className="he-card" href={`/${operation.apiSlug}/${operation.slug}/`} key={`${operation.method}-${operation.path}`}>
+                <div className="he-card-top">
+                  <h3>{operation.summary}</h3>
                   <span className={`method method-${operation.method.toLowerCase()}`}>{operation.method}</span>
                 </div>
-                <p className="endpoint-card-description">{operation.description}</p>
+                <p>{operation.description}</p>
               </Link>
             ))}
           </div>
@@ -146,7 +137,7 @@ function ApiOverview({ slug }: { slug: string }) {
 
         {info.markdownDescription ? (
           <section className="markdown-panel">
-            <h2 className="section-title">About this API</h2>
+            <h2 className="he-section-title">About this API</h2>
             <MarkdownBlock markdown={info.markdownDescription} />
           </section>
         ) : null}
@@ -157,9 +148,9 @@ function ApiOverview({ slug }: { slug: string }) {
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="fact-box">
-      <div className="fact-label">{label}</div>
-      <div className="fact-value">{value}</div>
+    <div className="he-stat">
+      <div className="he-stat-label">{label}</div>
+      <div className="he-stat-value">{value}</div>
     </div>
   );
 }

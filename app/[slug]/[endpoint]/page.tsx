@@ -52,12 +52,12 @@ export default async function EndpointPage({ params }: Props) {
   };
 
   return (
-    <DocsChrome currentApi={slug} currentPath={`/${slug}/${endpoint}/`}>
+    <DocsChrome>
       <script
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <div className="page-wrap">
+      <div className="he-page">
         <ApiReference operation={operation} />
       </div>
     </DocsChrome>
