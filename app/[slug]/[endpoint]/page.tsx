@@ -37,9 +37,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+import { DocsPage, DocsBody, DocsTitle, DocsDescription } from 'fumadocs-ui/page';
+
 export default async function EndpointPage({ params }: Props) {
   const { slug, endpoint } = await params;
-  console.log('EndpointPage params:', { slug, endpoint });
   const operation = getOperation(slug, endpoint);
   if (!operation) notFound();
 
@@ -58,9 +59,13 @@ export default async function EndpointPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <div className="mx-auto max-w-5xl px-6 py-14">
-        <FumadocsApiPage operation={operation} />
-      </div>
+      <DocsPage>
+        <DocsTitle>{operation.summary}</DocsTitle>
+        <DocsDescription>{operation.description}</DocsDescription>
+        <DocsBody>
+          <FumadocsApiPage operation={operation} />
+        </DocsBody>
+      </DocsPage>
     </DocsChrome>
   );
 }

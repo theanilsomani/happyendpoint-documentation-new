@@ -1,33 +1,54 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { apiReferences } from '@/lib/site';
+import { SidebarTabsDropdown } from 'fumadocs-ui/components/sidebar/tabs/dropdown';
+import { Boxes } from 'lucide-react';
 
 export function ApiDropdown({ currentApiSlug }: { currentApiSlug?: string }) {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const options = [
+    {
+      url: '/',
+      title: 'All APIs',
+      description: 'Back to API Catalogue',
+      icon: (
+        <div className="flex size-7 items-center justify-center rounded-md border bg-fd-secondary text-fd-secondary-foreground md:size-6">
+          <Boxes className="size-4" />
+        </div>
+      ),
+    },
+    ...apiReferences.map((api) => ({
+      url: `/${api.slug}/`,
+      title: api.title,
+      description: api.description,
+      icon: (
+        <div className="flex size-7 items-center justify-center rounded-md border bg-fd-primary/10 text-fd-primary md:size-6">
+          <Boxes className="size-4" />
+        </div>
+      ),
+    })),
+  ];
+
+  // Find the currently active option based on the URL
+  const activeOption = options.find((opt) => opt.url !== '/' && pathname.startsWith(opt.url));
 
   return (
-    <div className="relative w-full mb-4 px-2">
-      <select
-        value={currentApiSlug || ''}
-        onChange={(e) => {
-          if (e.target.value) {
-            router.push(`/${e.target.value}/`);
-          } else {
-            router.push('/');
-          }
-        }}
-        className="w-full appearance-none rounded-lg bg-fd-secondary/50 px-3 py-2 pr-8 text-sm font-medium text-fd-secondary-foreground hover:bg-fd-accent focus:bg-fd-background focus:outline-none focus:ring-2 focus:ring-fd-primary/50 transition-colors"
-      >
-        <option value="">Select an API...</option>
-        {apiReferences.map((api) => (
-          <option key={api.slug} value={api.slug}>
-            {api.title}
-          </option>
-        ))}
-      </select>
-      <ChevronDown className="pointer-events-none absolute right-5 top-1/2 size-4 -translate-y-1/2 text-fd-muted-foreground" />
+    <div className="px-2 mb-6">
+      <SidebarTabsDropdown
+        options={options}
+        placeholder={
+          <div className="flex items-center gap-2">
+            <div className="flex size-6 items-center justify-center rounded-md border bg-fd-secondary text-fd-muted-foreground">
+              <Boxes className="size-3.5" />
+            </div>
+            <span className="text-sm font-medium text-fd-muted-foreground">Select API...</span>
+          </div>
+        }
+        className="w-full h-auto py-2.5 bg-fd-secondary/30 hover:bg-fd-accent border-none shadow-none ring-1 ring-fd-border/50"
+      />
     </div>
   );
 }

@@ -16,9 +16,6 @@ const apiPages = Object.fromEntries(
       api.slug,
       createAPIPage(openapi, {
         client,
-        content: {
-          renderAPIExampleUsageTabs: () => null,
-        },
       }),
     ];
   }),
@@ -32,6 +29,8 @@ export function FumadocsApiPage({ operation }: { operation: ApiOperation }) {
   return (
     <APIPage
       document={`./openapi/${operation.apiSlug}.json`}
+      showTitle={false}
+      showDescription={false}
       operations={[
         {
           method: operation.method.toLowerCase() as never,
