@@ -38,6 +38,9 @@ export function DocsChrome({
         prefetch: false,
         banner: <ApiDropdown key="api-dropdown" currentApiSlug={currentApi} />,
       }}
+      searchToggle={{
+        enabled: false,
+      }}
     >
       {children}
     </DocsLayout>

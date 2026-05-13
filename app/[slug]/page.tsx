@@ -103,7 +103,7 @@ function ApiOverview({ slug }: { slug: string }) {
             <h1 className="text-4xl font-bold tracking-tight">{info.title}</h1>
             <p className="text-fd-muted-foreground mt-4 text-xl leading-relaxed">{info.description}</p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a className={buttonVariants({ variant: 'default' })} href={info.rapidApiUrl} rel="noreferrer" target="_blank">
+              <a className={buttonVariants({ variant: 'primary' })} href={info.rapidApiUrl} rel="noreferrer" target="_blank">
                 Open on RapidAPI <ExternalLink aria-hidden="true" className="ml-2 size-4" />
               </a>
               <a className={buttonVariants({ variant: 'outline' })} href={`/openapi/${slug}.json`}>
