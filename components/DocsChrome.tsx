@@ -13,10 +13,10 @@ export function DocsChrome({
   return (
     <DocsLayout
       tree={docsTree}
+      tabMode="top"
       nav={{
         title: (
-          <span className="he-brand-title">
-            <span className="he-brand-orb" />
+          <span className="font-semibold flex items-center gap-2">
             Happy Endpoint
           </span>
         ),
@@ -36,7 +36,6 @@ export function DocsChrome({
         defaultOpenLevel: 1,
         prefetch: false,
       }}
-      themeSwitch={{ enabled: false }}
     >
       {children}
     </DocsLayout>

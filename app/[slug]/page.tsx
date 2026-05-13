@@ -6,6 +6,8 @@ import { DocsChrome } from '@/components/DocsChrome';
 import { MarkdownBlock } from '@/components/MarkdownBlock';
 import { apiReferences, guides } from '@/lib/site';
 import { getApiInfo, getApiOperations } from '@/lib/openapi';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -56,24 +58,25 @@ export default async function GuideOrApiPage({ params }: Props) {
 
   return (
     <DocsChrome>
-      <div className="he-page he-page-narrow">
-        <article>
-          <h1 className="he-title">{guide.title}</h1>
-          <p className="he-lede">{guide.intro}</p>
+      <div className="mx-auto max-w-4xl px-6 py-14">
+        <article className="prose prose-fd dark:prose-invert max-w-none">
+          <h1 className="text-4xl font-bold tracking-tight">{guide.title}</h1>
+          <p className="text-fd-muted-foreground mt-4 text-xl leading-relaxed">{guide.intro}</p>
 
-          {guide.sections.map((section) => (
-            <section id={section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')} key={section.title}>
-              <h2 className="he-section-title">{section.title}</h2>
-              <div className="grid gap-3">
-                {section.items.map((item) => (
-                  <div className="he-card" key={item.heading}>
-                    <h3>{item.heading}</h3>
-                    <p>{item.body}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))}
+          <div className="mt-12 space-y-12">
+            {guide.sections.map((section) => (
+              <section id={section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')} key={section.title}>
+                <h2 className="text-2xl font-bold">{section.title}</h2>
+                <div className="mt-6">
+                  <Cards>
+                    {section.items.map((item) => (
+                      <Card key={item.heading} title={item.heading} description={item.body} />
+                    ))}
+                  </Cards>
+                </div>
+              </section>
+            ))}
+          </div>
         </article>
       </div>
     </DocsChrome>
@@ -89,55 +92,59 @@ function ApiOverview({ slug }: { slug: string }) {
 
   return (
     <DocsChrome>
-      <div className="he-page">
+      <div className="mx-auto max-w-5xl px-6 py-14">
         <section>
-          <div className="he-eyebrow">{info.group}</div>
-          <h1 className="he-title">{info.title}</h1>
-          <p className="he-lede">{info.description}</p>
-          <div className="he-actions">
-            <a className="he-button-primary" href={info.rapidApiUrl} rel="noreferrer" target="_blank">
-              Open on RapidAPI <ExternalLink aria-hidden="true" className="size-4" />
+          <div className="text-fd-primary mb-4 font-semibold">{info.group}</div>
+          <h1 className="text-4xl font-bold tracking-tight">{info.title}</h1>
+          <p className="text-fd-muted-foreground mt-4 text-xl leading-relaxed">{info.description}</p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <a className={buttonVariants({ variant: 'default' })} href={info.rapidApiUrl} rel="noreferrer" target="_blank">
+              Open on RapidAPI <ExternalLink aria-hidden="true" className="ml-2 size-4" />
             </a>
-            <a className="he-button-secondary" href={`/openapi/${slug}.json`}>
+            <a className={buttonVariants({ variant: 'outline' })} href={`/openapi/${slug}.json`}>
               OpenAPI JSON
             </a>
           </div>
         </section>
 
-        <div className="he-stats">
+        <div className="mt-12 grid gap-4 sm:grid-cols-3">
           <Fact label="Version" value={info.version} />
           <Fact label="Server" value={info.serverUrl} />
           <Fact label="Endpoints" value={String(operations.length)} />
         </div>
 
         {tags.length ? (
-          <div className="he-tags">
+          <div className="mt-8 flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <span className="he-tag" key={tag}>
+              <span className="border-fd-border text-fd-muted-foreground rounded-md border px-3 py-1 text-sm" key={tag}>
                 {tag}
               </span>
             ))}
           </div>
         ) : null}
 
-        <section>
-          <h2 className="he-section-title">Endpoints</h2>
-          <div className="he-endpoint-grid">
+        <section className="mt-16">
+          <h2 className="text-2xl font-bold mb-6">Endpoints</h2>
+          <Cards>
             {operations.map((operation) => (
-              <Link className="he-card" href={`/${operation.apiSlug}/${operation.slug}/`} key={`${operation.method}-${operation.path}`}>
-                <div className="he-card-top">
-                  <h3>{operation.summary}</h3>
-                  <span className={`method method-${operation.method.toLowerCase()}`}>{operation.method}</span>
-                </div>
-                <p>{operation.description}</p>
-              </Link>
+              <Card
+                key={`${operation.method}-${operation.path}`}
+                href={`/${operation.apiSlug}/${operation.slug}/`}
+                title={
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-semibold">{operation.summary}</span>
+                    <span className={`method method-${operation.method.toLowerCase()}`}>{operation.method}</span>
+                  </div>
+                }
+                description={operation.description}
+              />
             ))}
-          </div>
+          </Cards>
         </section>
 
         {info.markdownDescription ? (
-          <section className="markdown-panel">
-            <h2 className="he-section-title">About this API</h2>
+          <section className="markdown-panel mt-16">
+            <h2 className="text-2xl font-bold mb-6">About this API</h2>
             <MarkdownBlock markdown={info.markdownDescription} />
           </section>
         ) : null}
@@ -148,9 +155,9 @@ function ApiOverview({ slug }: { slug: string }) {
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="he-stat">
-      <div className="he-stat-label">{label}</div>
-      <div className="he-stat-value">{value}</div>
+    <div className="bg-fd-card border-fd-border rounded-xl border p-5">
+      <div className="text-fd-muted-foreground text-xs font-bold uppercase tracking-wider">{label}</div>
+      <div className="text-fd-foreground mt-2 font-mono">{value}</div>
     </div>
   );
 }

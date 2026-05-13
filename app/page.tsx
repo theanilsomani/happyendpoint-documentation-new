@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { DocsChrome } from '@/components/DocsChrome';
 import { getApiOperations } from '@/lib/openapi';
 import { apiReferences, groupedApis, guides, site } from '@/lib/site';
+import { Card, Cards } from 'fumadocs-ui/components/card';
 
 export const metadata: Metadata = {
   title: 'Happy Endpoint API Documentation',
@@ -23,42 +24,47 @@ export default function HomePage() {
 
   return (
     <DocsChrome>
-      <div className="he-page">
+      <div className="mx-auto max-w-7xl px-6 py-14 sm:py-20 lg:px-12">
         <section>
-          <div className="he-eyebrow">
-            <Sparkles aria-hidden="true" className="inline size-4" /> Data APIs for production teams
+          <div className="text-fd-primary mb-5 text-sm font-semibold flex items-center gap-2">
+            <Sparkles aria-hidden="true" className="size-4" /> Data APIs for production teams
           </div>
-          <h1 className="he-title">Happy Endpoint API Documentation</h1>
-          <p className="he-lede">
+          <h1 className="text-fd-foreground text-4xl sm:text-5xl font-bold tracking-tight">
+            Happy Endpoint API Documentation
+          </h1>
+          <p className="text-fd-muted-foreground mt-5 max-w-2xl text-lg leading-relaxed">
             Browse endpoint-level documentation for retail, real estate, travel, and marketplace
             data APIs sold on RapidAPI.
           </p>
         </section>
 
-        <div className="he-stats">
+        <div className="mt-10 grid gap-4 sm:grid-cols-3">
           <Stat icon={<Database className="size-5" />} label="API references" value={String(apiReferences.length)} />
           <Stat icon={<ArrowRight className="size-5" />} label="Indexed endpoint pages" value={String(endpointCount)} />
           <Stat icon={<ShieldCheck className="size-5" />} label="Shared guides" value={String(guides.length)} />
         </div>
 
-        <section className="mt-12">
+        <section className="mt-16">
           {Object.entries(groups).map(([group, apis]) => (
-            <div className="mt-9" key={group}>
-              <h2 className="he-section-title">{group}</h2>
-              <div className="he-card-grid">
+            <div className="mt-12" key={group}>
+              <h2 className="text-fd-foreground mb-4 text-xl font-semibold">{group}</h2>
+              <Cards>
                 {apis.map((api) => (
-                  <Link className="he-card" href={`/${api.slug}/`} key={api.slug}>
-                    <div className="he-card-top">
-                      <h3>{api.title}</h3>
-                      <span className="he-count">{getApiOperations(api.slug).length} endpoints</span>
-                    </div>
-                    <p>{api.description}</p>
-                    <span className="he-card-link">
-                      View reference <ArrowRight aria-hidden="true" className="size-4" />
-                    </span>
-                  </Link>
+                  <Card
+                    key={api.slug}
+                    href={`/${api.slug}/`}
+                    title={
+                      <div className="flex items-center justify-between gap-4">
+                        <span>{api.title}</span>
+                        <span className="bg-fd-secondary text-fd-muted-foreground rounded-md px-2 py-1 text-xs font-normal">
+                          {getApiOperations(api.slug).length} endpoints
+                        </span>
+                      </div>
+                    }
+                    description={api.description}
+                  />
                 ))}
-              </div>
+              </Cards>
             </div>
           ))}
         </section>
@@ -69,12 +75,12 @@ export default function HomePage() {
 
 function Stat({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
-    <div className="he-stat">
-      <div className="flex items-center gap-2 text-fd-muted-foreground">
+    <div className="bg-fd-card border-fd-border rounded-xl border p-5">
+      <div className="text-fd-muted-foreground flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
         {icon}
         <span>{label}</span>
       </div>
-      <div className="mt-3 text-3xl font-semibold text-fd-foreground">{value}</div>
+      <div className="text-fd-foreground mt-3 text-3xl font-semibold font-mono">{value}</div>
     </div>
   );
 }
