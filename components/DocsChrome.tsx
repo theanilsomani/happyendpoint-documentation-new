@@ -1,4 +1,4 @@
-import { BookOpen, Braces, ChevronRight, Gauge, Home, KeyRound, ShieldCheck } from 'lucide-react';
+import { BookOpen, Braces, ChevronRight, Gauge, Home, KeyRound, PanelLeft, ShieldCheck } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -30,31 +30,34 @@ export function DocsChrome({
   const records = getSearchRecords();
   const operations = currentApi ? getApiOperations(currentApi) : [];
   const activeApi = apiReferences.find((api) => api.slug === currentApi);
+  const groupedOperations = operations.reduce<Record<string, typeof operations>>((groups, operation) => {
+    const tag = operation.tags[0] || 'Endpoints';
+    groups[tag] ??= [];
+    groups[tag].push(operation);
+    return groups;
+  }, {});
 
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[300px_minmax(0,1fr)]">
-      <aside className="border-b border-[var(--he-line)] bg-[var(--he-panel)] lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:border-b-0 lg:border-r">
-        <div className="p-5">
-          <Link className="flex items-center gap-3" href="/">
-            <Image
-              alt="Happy Endpoint"
-              className="h-9 w-9 rounded-md object-contain"
-              height={36}
-              src="/happyendpoint-com-logo.png"
-              width={36}
-            />
+    <div className="docs-shell">
+      <aside className="docs-sidebar">
+        <div className="brand-row">
+          <Link className="brand-mark" href="/">
+            <Image alt="Happy Endpoint" className="brand-logo" height={28} src="/happyendpoint-com-logo.png" width={28} />
+          </Link>
+          <Link href="/">
             <div>
-              <div className="font-semibold leading-tight">Happy Endpoint</div>
-              <div className="text-xs text-[var(--he-muted)]">API documentation</div>
+              <div className="brand-title">Happy Endpoint</div>
+              <div className="brand-subtitle">API documentation</div>
             </div>
           </Link>
-
-          <div className="mt-5">
-            <SearchBox currentApi={currentApi} records={records} />
-          </div>
+          <PanelLeft aria-hidden="true" className="nav-icon" style={{ marginLeft: 'auto', color: 'var(--he-muted)' }} />
         </div>
 
-        <nav className="px-3 pb-6 text-sm">
+        <div className="sidebar-search">
+          <SearchBox currentApi={currentApi} records={records} />
+        </div>
+
+        <nav className="docs-nav">
           <NavLink active={currentPath === '/'} href="/" icon={<Home className="h-4 w-4" />}>
             API Catalogue
           </NavLink>
@@ -76,23 +79,27 @@ export function DocsChrome({
           </NavGroup>
 
           {activeApi ? (
+            <>
             <NavGroup title={activeApi.title}>
               <NavLink active={currentPath === `/${activeApi.slug}/`} href={`/${activeApi.slug}/`}>
                 Overview
               </NavLink>
-              {operations.map((operation) => (
-                <NavLink
-                  active={currentPath === `/${operation.apiSlug}/${operation.slug}/`}
-                  href={`/${operation.apiSlug}/${operation.slug}/`}
-                  key={`${operation.method}-${operation.path}`}
-                >
-                  <span className={`method method-${operation.method.toLowerCase()}`}>
-                    {operation.method}
-                  </span>
-                  <span className="min-w-0 truncate">{operation.summary}</span>
-                </NavLink>
-              ))}
             </NavGroup>
+            {Object.entries(groupedOperations).map(([tag, tagOperations]) => (
+              <NavGroup key={tag} title={tag}>
+                {tagOperations.map((operation) => (
+                  <NavLink
+                    active={currentPath === `/${operation.apiSlug}/${operation.slug}/`}
+                    href={`/${operation.apiSlug}/${operation.slug}/`}
+                    key={`${operation.method}-${operation.path}`}
+                    method={operation.method}
+                  >
+                    {operation.summary}
+                  </NavLink>
+                ))}
+              </NavGroup>
+            ))}
+            </>
           ) : (
             <NavGroup title="APIs">
               {apiReferences.map((api) => (
@@ -106,18 +113,16 @@ export function DocsChrome({
         </nav>
       </aside>
 
-      <main>{children}</main>
+      <main className="docs-main">{children}</main>
     </div>
   );
 }
 
 function NavGroup({ children, title }: { children: ReactNode; title: string }) {
   return (
-    <div className="mt-6">
-      <div className="px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--he-muted)]">
-        {title}
-      </div>
-      <div className="space-y-1">{children}</div>
+    <div className="nav-group">
+      <div className="nav-group-title">{title}</div>
+      <div className="nav-group-items">{children}</div>
     </div>
   );
 }
@@ -127,24 +132,24 @@ function NavLink({
   children,
   href,
   icon,
+  method,
 }: {
   active?: boolean;
   children: ReactNode;
   href: string;
   icon?: ReactNode;
+  method?: string;
 }) {
   return (
     <Link
-      className={[
-        'focus-ring flex min-h-10 items-center gap-2 rounded-md px-3 py-2',
-        active
-          ? 'bg-[var(--he-text)] text-[var(--he-bg)]'
-          : 'text-[var(--he-muted)] hover:bg-[var(--he-panel-strong)] hover:text-[var(--he-text)]',
-      ].join(' ')}
+      className={['focus-ring nav-link', active ? 'nav-link-active' : ''].join(' ')}
       href={href}
     >
-      {icon}
-      {children}
+      {icon ? <span className="nav-icon">{icon}</span> : null}
+      <span className="nav-label">{children}</span>
+      {method ? (
+        <span className={`method method-${method.toLowerCase()} nav-method`}>{method}</span>
+      ) : null}
     </Link>
   );
 }

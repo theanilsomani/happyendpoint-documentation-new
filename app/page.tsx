@@ -23,44 +23,44 @@ export default function HomePage() {
 
   return (
     <DocsChrome currentPath="/">
-      <div className="px-5 py-10 sm:px-8 lg:px-12">
+      <div className="page-wrap">
         <section className="prose-docs max-w-6xl">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-[var(--he-line)] bg-[var(--he-panel)] px-3 py-1 text-sm text-[var(--he-muted)]">
-            <Sparkles aria-hidden="true" className="h-4 w-4 text-[var(--he-accent)]" />
+          <div className="eyebrow">
+            <Sparkles aria-hidden="true" className="nav-icon" />
             Data APIs for production teams
           </div>
           <h1>Happy Endpoint API Documentation</h1>
-          <p className="mt-5 text-xl">
+          <p className="hero-lede">
             Browse endpoint-level documentation for retail, real estate, travel, and marketplace data APIs sold on RapidAPI.
           </p>
         </section>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
+        <div className="stat-grid" style={{ marginTop: '2.5rem' }}>
           <Stat icon={<Database className="h-5 w-5" />} label="API references" value={String(apiReferences.length)} />
           <Stat icon={<ArrowRight className="h-5 w-5" />} label="Indexed endpoint pages" value={String(endpointCount)} />
           <Stat icon={<ShieldCheck className="h-5 w-5" />} label="Shared guides" value={String(guides.length)} />
         </div>
 
-        <section className="mt-12 space-y-10">
+        <section style={{ marginTop: '3rem' }}>
           {Object.entries(groups).map(([group, apis]) => (
-            <div key={group}>
-              <h2 className="text-xl font-semibold">{group}</h2>
-              <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div key={group} style={{ marginTop: '2.2rem' }}>
+              <h2 className="section-title">{group}</h2>
+              <div className="api-grid">
                 {apis.map((api) => (
                   <Link
-                    className="focus-ring block rounded-md border border-[var(--he-line)] bg-[var(--he-panel)] p-5 transition hover:-translate-y-0.5 hover:border-[var(--he-accent)]"
+                    className="focus-ring api-card"
                     href={`/${api.slug}/`}
                     key={api.slug}
                   >
-                    <div className="flex items-center justify-between gap-4">
-                      <h3 className="font-semibold">{api.title}</h3>
-                      <span className="rounded-md bg-[var(--he-panel-strong)] px-2 py-1 text-xs text-[var(--he-muted)]">
+                    <div className="api-card-top">
+                      <h3>{api.title}</h3>
+                      <span className="count-pill">
                         {getApiOperations(api.slug).length} endpoints
                       </span>
                     </div>
-                    <p className="mt-3 text-sm leading-6 text-[var(--he-muted)]">{api.description}</p>
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--he-accent)]">
-                      View reference <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                    <p>{api.description}</p>
+                    <span className="card-link-label">
+                      View reference <ArrowRight aria-hidden="true" className="nav-icon" />
                     </span>
                   </Link>
                 ))}
@@ -75,12 +75,12 @@ export default function HomePage() {
 
 function Stat({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[var(--he-line)] bg-[var(--he-panel)] p-5">
-      <div className="flex items-center gap-3 text-[var(--he-muted)]">
+    <div className="fact-box">
+      <div style={{ alignItems: 'center', color: 'var(--he-muted)', display: 'flex', gap: '0.65rem' }}>
         {icon}
-        <span className="text-sm">{label}</span>
+        <span>{label}</span>
       </div>
-      <div className="mt-3 text-3xl font-semibold">{value}</div>
+      <div style={{ fontSize: '2rem', fontWeight: 700, marginTop: '0.65rem' }}>{value}</div>
     </div>
   );
 }

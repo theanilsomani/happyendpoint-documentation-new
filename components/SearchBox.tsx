@@ -38,14 +38,14 @@ export function SearchBox({
   }, [normalized, scopedRecords]);
 
   return (
-    <div className="relative">
+    <div className="search-wrap">
       <label className="sr-only" htmlFor="docs-search">
         Search documentation
       </label>
-      <Search aria-hidden="true" className="absolute left-3 top-3 h-4 w-4 text-[var(--he-muted)]" />
+      <Search aria-hidden="true" className="search-icon" />
       <input
         id="docs-search"
-        className="focus-ring h-10 w-full rounded-md border border-[var(--he-line)] bg-[var(--he-bg)] pl-9 pr-9 text-sm"
+        className="focus-ring search-input"
         placeholder={currentApi ? `Search ${currentApi} docs` : 'Search docs'}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
@@ -53,7 +53,7 @@ export function SearchBox({
       {query ? (
         <button
           aria-label="Clear search"
-          className="absolute right-2 top-2 rounded-md p-1.5 text-[var(--he-muted)] hover:bg-[var(--he-panel-strong)]"
+          className="search-clear"
           onClick={() => setQuery('')}
           type="button"
         >
@@ -61,21 +61,21 @@ export function SearchBox({
         </button>
       ) : null}
       {query ? (
-        <div className="absolute z-30 mt-2 max-h-96 w-full overflow-auto rounded-md border border-[var(--he-line)] bg-[var(--he-bg)] p-2 shadow-xl">
+        <div className="search-results">
           {results.length ? (
             results.map((record) => (
               <Link
-                className="block rounded-md px-3 py-2 hover:bg-[var(--he-panel)]"
+                className="search-result"
                 href={record.href}
                 key={record.href}
                 onClick={() => setQuery('')}
               >
-                <span className="block text-sm font-semibold">{record.title}</span>
-                <span className="mt-0.5 block text-xs text-[var(--he-muted)]">{record.section}</span>
+                <span className="search-result-title">{record.title}</span>
+                <span className="search-result-section">{record.section}</span>
               </Link>
             ))
           ) : (
-            <div className="px-3 py-6 text-center text-sm text-[var(--he-muted)]">No results found.</div>
+            <div className="search-empty">No results found.</div>
           )}
         </div>
       ) : null}

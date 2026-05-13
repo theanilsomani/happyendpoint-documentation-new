@@ -49,7 +49,8 @@ export function getApiInfo(apiSlug: string) {
     ...meta,
     openapiTitle: readString((spec.info as Json | undefined)?.title, meta.title),
     version: readString((spec.info as Json | undefined)?.version, '1.0'),
-    description: readString((spec.info as Json | undefined)?.description, meta.description),
+    description: meta.description,
+    markdownDescription: readString((spec.info as Json | undefined)?.description, ''),
     serverUrl: getServerUrl(spec),
   };
 }

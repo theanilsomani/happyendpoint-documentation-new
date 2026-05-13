@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DocsChrome } from '@/components/DocsChrome';
+import { MarkdownBlock } from '@/components/MarkdownBlock';
 import { apiReferences, guides } from '@/lib/site';
 import { getApiInfo, getApiOperations } from '@/lib/openapi';
 
@@ -52,10 +53,10 @@ export default async function GuidePage({ params }: Props) {
 
   return (
     <DocsChrome currentPath={`/${guide.slug}/`}>
-      <div className="grid gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[minmax(0,1fr)_240px] lg:px-12">
+      <div className="page-wrap page-wrap-narrow">
         <article className="prose-docs min-w-0">
           <h1>{guide.title}</h1>
-          <p className="mt-5 text-xl">{guide.intro}</p>
+          <p className="hero-lede">{guide.intro}</p>
 
           {guide.sections.map((section) => (
             <section id={section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')} key={section.title}>
@@ -71,23 +72,6 @@ export default async function GuidePage({ params }: Props) {
             </section>
           ))}
         </article>
-
-        <aside className="hidden lg:block">
-          <div className="sticky top-6 rounded-md border border-[var(--he-line)] bg-[var(--he-panel)] p-4">
-            <div className="text-sm font-semibold">On this page</div>
-            <div className="mt-3 space-y-2 text-sm text-[var(--he-muted)]">
-              {guide.sections.map((section) => (
-                <Link
-                  className="block hover:text-[var(--he-text)]"
-                  href={`#${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                  key={section.title}
-                >
-                  {section.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </aside>
       </div>
     </DocsChrome>
   );
@@ -102,22 +86,22 @@ function ApiOverview({ slug }: { slug: string }) {
 
   return (
     <DocsChrome currentApi={slug} currentPath={`/${slug}/`}>
-      <div className="px-5 py-10 sm:px-8 lg:px-12">
+      <div className="page-wrap">
         <section className="prose-docs">
-          <div className="mb-5 text-sm font-semibold text-[var(--he-accent)]">{info.group}</div>
+          <div className="eyebrow">{info.group}</div>
           <h1>{info.title}</h1>
-          <p className="mt-5 text-xl">{info.description}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <p className="hero-lede">{info.description}</p>
+          <div className="hero-actions">
             <a
-              className="focus-ring inline-flex items-center gap-2 rounded-md bg-[var(--he-text)] px-4 py-2 text-sm font-semibold text-[var(--he-bg)]"
+              className="focus-ring button-primary"
               href={info.rapidApiUrl}
               rel="noreferrer"
               target="_blank"
             >
-              Open on RapidAPI <ExternalLink aria-hidden="true" className="h-4 w-4" />
+              Open on RapidAPI <ExternalLink aria-hidden="true" className="nav-icon" />
             </a>
             <a
-              className="focus-ring inline-flex items-center gap-2 rounded-md border border-[var(--he-line)] px-4 py-2 text-sm font-semibold"
+              className="focus-ring button-secondary"
               href={`/openapi/${slug}.json`}
             >
               OpenAPI JSON
@@ -125,41 +109,47 @@ function ApiOverview({ slug }: { slug: string }) {
           </div>
         </section>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+        <div className="fact-grid">
           <Fact label="Version" value={info.version} />
           <Fact label="Server" value={info.serverUrl} />
           <Fact label="Endpoints" value={String(operations.length)} />
         </div>
 
         {tags.length ? (
-          <div className="mt-8 flex flex-wrap gap-2">
+          <div className="tag-row">
             {tags.map((tag) => (
-              <span className="rounded-md border border-[var(--he-line)] px-3 py-1 text-sm text-[var(--he-muted)]" key={tag}>
+              <span className="tag-pill" key={tag}>
                 {tag}
               </span>
             ))}
           </div>
         ) : null}
 
-        <section className="mt-12">
-          <h2 className="text-xl font-semibold">Endpoints</h2>
-          <div className="mt-4 divide-y divide-[var(--he-line)] rounded-md border border-[var(--he-line)] bg-[var(--he-panel)]">
+        <section>
+          <h2 className="section-title">Endpoints</h2>
+          <div className="endpoint-grid">
             {operations.map((operation) => (
               <Link
-                className="focus-ring flex items-center gap-4 p-4 hover:bg-[var(--he-panel-strong)]"
+                className="focus-ring endpoint-card"
                 href={`/${operation.apiSlug}/${operation.slug}/`}
                 key={`${operation.method}-${operation.path}`}
               >
-                <span className={`method method-${operation.method.toLowerCase()}`}>{operation.method}</span>
-                <div className="min-w-0 flex-1">
-                  <div className="truncate font-semibold">{operation.summary}</div>
-                  <div className="truncate font-mono text-xs text-[var(--he-muted)]">{operation.path}</div>
+                <div className="endpoint-card-title">
+                  {operation.summary}
+                  <span className={`method method-${operation.method.toLowerCase()}`}>{operation.method}</span>
                 </div>
-                <ArrowRight aria-hidden="true" className="h-4 w-4 text-[var(--he-muted)]" />
+                <p className="endpoint-card-description">{operation.description}</p>
               </Link>
             ))}
           </div>
         </section>
+
+        {info.markdownDescription ? (
+          <section className="markdown-panel">
+            <h2 className="section-title">About this API</h2>
+            <MarkdownBlock markdown={info.markdownDescription} />
+          </section>
+        ) : null}
       </div>
     </DocsChrome>
   );
@@ -167,9 +157,9 @@ function ApiOverview({ slug }: { slug: string }) {
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-[var(--he-line)] bg-[var(--he-panel)] p-4">
-      <div className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--he-muted)]">{label}</div>
-      <div className="mt-2 break-words font-mono text-sm">{value}</div>
+    <div className="fact-box">
+      <div className="fact-label">{label}</div>
+      <div className="fact-value">{value}</div>
     </div>
   );
 }

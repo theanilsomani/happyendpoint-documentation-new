@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next';
 import { getAllOperations } from '@/lib/openapi';
 import { apiReferences, guides, site } from '@/lib/site';
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const staticPages = [

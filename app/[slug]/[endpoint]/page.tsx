@@ -57,7 +57,7 @@ export default async function EndpointPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <div className="px-5 py-10 sm:px-8 lg:px-12">
+      <div className="page-wrap">
         <ApiReference operation={operation} />
       </div>
     </DocsChrome>
