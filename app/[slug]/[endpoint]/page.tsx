@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function EndpointPage({ params }: Props) {
   const { slug, endpoint } = await params;
+  console.log('EndpointPage params:', { slug, endpoint });
   const operation = getOperation(slug, endpoint);
   if (!operation) notFound();
 

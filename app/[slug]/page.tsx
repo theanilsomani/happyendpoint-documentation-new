@@ -50,6 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuideOrApiPage({ params }: Props) {
   const { slug } = await params;
+  console.log('GuideOrApiPage params:', { slug });
   const api = getApiInfo(slug);
   if (api) return <ApiOverview slug={slug} />;
 

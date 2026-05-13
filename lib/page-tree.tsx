@@ -1,4 +1,4 @@
-import { BookOpen, Boxes, Database } from 'lucide-react';
+import { BookOpen, Boxes, Database, FileText } from 'lucide-react';
 import type { Folder, Item, Root } from 'fumadocs-core/page-tree';
 import { getApiOperations } from './openapi';
 import { apiReferences, guides } from './site';
@@ -8,6 +8,7 @@ const guideNodes: Item[] = guides.map((guide) => ({
   name: guide.title,
   url: `/${guide.slug}/`,
   description: guide.description,
+  icon: <FileText />,
 }));
 
 export function getDocsTree(activeApiSlug?: string): Root {

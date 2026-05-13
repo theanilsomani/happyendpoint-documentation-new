@@ -18,7 +18,7 @@ export function ApiDropdown({ currentApiSlug }: { currentApiSlug?: string }) {
             router.push('/');
           }
         }}
-        className="w-full appearance-none rounded-lg border border-fd-border bg-fd-card px-3 py-2 pr-8 text-sm font-medium text-fd-foreground hover:bg-fd-accent focus:outline-none"
+        className="w-full appearance-none rounded-lg bg-fd-secondary/50 px-3 py-2 pr-8 text-sm font-medium text-fd-secondary-foreground hover:bg-fd-accent focus:bg-fd-background focus:outline-none focus:ring-2 focus:ring-fd-primary/50 transition-colors"
       >
         <option value="">Select an API...</option>
         {apiReferences.map((api) => (
