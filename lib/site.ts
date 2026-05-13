@@ -24,7 +24,12 @@ export const site = {
   name: 'Happy Endpoint',
   url: 'https://docs.happyendpoint.com',
   description:
-    'Production API documentation for Happy Endpoint data APIs on RapidAPI.',
+    'The official documentation for Happy Endpoint data APIs on RapidAPI. Access real-time Retail, Real Estate, and Travel data with stable, high-performance endpoints.',
+  email: 'happyendpointhq@gmail.com',
+  twitter: 'https://x.com/happyendpointhq',
+  github: 'https://github.com/happyendpointhq',
+  rapidApi: 'https://rapidapi.com/user/happyendpoint',
+  apify: 'https://apify.com/happyendpoint',
 };
 
 export const apiReferences: ApiMeta[] = [
@@ -33,24 +38,24 @@ export const apiReferences: ApiMeta[] = [
     title: 'Sephora API',
     group: 'Retail APIs',
     description:
-      'Beauty catalog, keyword search, brand, category, store, and product detail data.',
-    rapidApiUrl: 'https://rapidapi.com/',
+      'Real-time beauty catalog, keyword search, brand, category, store, and product detail data.',
+    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/real-time-sephora-api/',
   },
   {
     slug: 'tesco',
     title: 'Tesco API',
     group: 'Retail APIs',
     description:
-      'Grocery product search, pricing, catalog, and product detail data.',
-    rapidApiUrl: 'https://rapidapi.com/',
+      'Grocery product search, pricing, catalog, and product detail data for UK and Ireland.',
+    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/tesco-data-api/',
   },
   {
     slug: 'ikea',
     title: 'IKEA API',
     group: 'Retail APIs',
     description:
-      'Furniture, home goods, product detail, search, and catalog data.',
-    rapidApiUrl: 'https://rapidapi.com/',
+      'Furniture, home goods, product detail, search, and catalog data for global markets.',
+    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/ikea-api-pro/',
   },
   {
     slug: 'propertyfinder',
@@ -58,7 +63,7 @@ export const apiReferences: ApiMeta[] = [
     group: 'Real Estate APIs',
     description:
       'UAE property listings, locations, prices, agencies, and real estate market data.',
-    rapidApiUrl: 'https://rapidapi.com/',
+    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/propertyfinder-uae-data',
   },
   {
     slug: 'bayut',
@@ -66,7 +71,7 @@ export const apiReferences: ApiMeta[] = [
     group: 'Real Estate APIs',
     description:
       'UAE real estate search, listing detail, agency, location, and price data.',
-    rapidApiUrl: 'https://rapidapi.com/',
+    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/bayut14/',
   },
   {
     slug: 'priceline',
@@ -74,46 +79,73 @@ export const apiReferences: ApiMeta[] = [
     group: 'Travel APIs',
     description:
       'Hotel, destination, pricing, and travel discovery data for booking workflows.',
-    rapidApiUrl: 'https://rapidapi.com/',
+    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/priceline-api-pro/',
   },
 ];
 
 export const guides: Guide[] = [
   {
+    slug: 'welcome',
+    title: 'Welcome',
+    description:
+      'Introduction to Happy Endpoint APIs, official links, and support channels.',
+    intro:
+      'Happy Endpoint is a premium provider of real-time data APIs for Retail, Real Estate, and Travel. We focus on providing high-quality, stable, and developer-friendly access to complex datasets.',
+    sections: [
+      {
+        title: 'Our Ecosystem',
+        items: [
+          {
+            heading: 'Main Website',
+            body: 'Visit happyendpoint.com for our full catalog of services and high-level product details.',
+          },
+          {
+            heading: 'RapidAPI Hub',
+            body: 'Browse all 11+ Happy Endpoint APIs on our official RapidAPI profile. We maintain 9.9+ service scores and high performance across all endpoints.',
+          },
+          {
+            heading: 'Apify Scrapers',
+            body: 'For custom scraping needs and large-scale data extraction, visit our Apify profile at apify.com/happyendpoint.',
+          },
+        ],
+      },
+      {
+        title: 'Support & Community',
+        items: [
+          {
+            heading: 'Direct Email',
+            body: 'Need help or have a custom data request? Email us at happyendpointhq@gmail.com. We typically respond within 24 hours.',
+          },
+          {
+            heading: 'Twitter (X)',
+            body: 'Follow @happyendpointhq on X for real-time status updates, new API launches, and technical tips.',
+          },
+          {
+            heading: 'GitHub',
+            body: 'Find our official SDKs, community examples, and issue trackers at github.com/happyendpointhq.',
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: 'credits',
     title: 'Credits',
     description:
-      'How RapidAPI credits, plan quotas, and request limits work for Happy Endpoint APIs.',
+      'Understanding RapidAPI credits, plan quotas, and request limits for Happy Endpoint.',
     intro:
-      'Happy Endpoint APIs are sold on RapidAPI. Each API can have different Basic, Pro, Ultra, and Mega limits, so production integrations should estimate volume before launch.',
+      'All Happy Endpoint APIs use the RapidAPI credit system. Each plan (Basic, Pro, Ultra, Mega) provides a specific monthly quota designed to scale with your production needs.',
     sections: [
       {
         title: 'Choose the right plan',
         items: [
           {
-            heading: 'Check the RapidAPI Pricing tab',
-            body: 'Plan names are consistent, but quotas are API-specific. Confirm the exact request allowance for the API you are integrating.',
+            heading: 'Predictable Pricing',
+            body: 'We design our quotas to be generous. Always check the Pricing tab on our RapidAPI listings for the most up-to-date monthly request limits.',
           },
           {
-            heading: 'Model real monthly usage',
-            body: 'Include searches, detail lookups, scheduled refreshes, retries, and background imports. A first demo run is rarely a good production estimate.',
-          },
-          {
-            heading: 'Design for upgrades',
-            body: 'Moving from Basic to Pro, Ultra, or Mega should be an operations decision, not a code rewrite.',
-          },
-        ],
-      },
-      {
-        title: 'Control request volume',
-        items: [
-          {
-            heading: 'Cache stable resources',
-            body: 'Cache categories, locations, product metadata, listing metadata, and other slow-changing data when live freshness is not required.',
-          },
-          {
-            heading: 'Queue bulk work',
-            body: 'Run imports, enrichment, and monitoring in controlled jobs instead of sending bursts from user-facing routes.',
+            heading: 'Monitor your usage',
+            body: 'Use the RapidAPI Dashboard to track your credit consumption in real-time and set up alerts before you hit your limits.',
           },
         ],
       },
@@ -123,32 +155,20 @@ export const guides: Guide[] = [
     slug: 'status-codes',
     title: 'Status Codes',
     description:
-      'HTTP status code reference for authentication, validation, rate limits, retries, and upstream failures.',
+      'HTTP status code reference for Happy Endpoint APIs, from success to rate limits.',
     intro:
-      'Every response includes an HTTP status code. Use it to decide whether to parse data, fix a request, update credentials, slow down, or retry later.',
+      'Happy Endpoint APIs follow standard REST conventions. Use these status codes to build robust, automated data workflows that handle success and failure gracefully.',
     sections: [
       {
-        title: 'Common outcomes',
+        title: 'Response Reference',
         items: [
           {
-            heading: '200 range',
-            body: 'The request succeeded. Parse the JSON body and handle optional fields or empty arrays normally.',
+            heading: '200 OK',
+            body: 'The request was successful and the data is in the response body. If the search yielded no results, you will still get a 200 with an empty data array.',
           },
           {
-            heading: '400 Bad Request',
-            body: 'A required parameter is missing, malformed, unsupported, or outside the accepted range. Fix the request before retrying.',
-          },
-          {
-            heading: '401 or 403',
-            body: 'The RapidAPI key is missing, invalid, expired, or not subscribed to the API. Check credentials and subscription access.',
-          },
-          {
-            heading: '429 Too Many Requests',
-            body: 'A rate limit or quota window was exceeded. Back off, queue work, or review the active RapidAPI plan.',
-          },
-          {
-            heading: '500 range and timeouts',
-            body: 'Treat these as transient when safe. Retry with exponential backoff and cap retry attempts.',
+            heading: '429 Rate Limit',
+            body: 'You have exceeded your plan’s rate limit. We recommend implementing exponential backoff or upgrading to a higher tier on RapidAPI.',
           },
         ],
       },
@@ -351,6 +371,40 @@ export const guides: Guide[] = [
           {
             heading: 'Backoff',
             body: 'A retry strategy that waits longer after each failed attempt.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'support',
+    title: 'Support',
+    description: 'Contact Happy Endpoint for technical assistance, custom data, or feedback.',
+    intro: 'We are here to help you build better with our data. Whether you have a technical question or need a custom scraping solution, feel free to reach out.',
+    sections: [
+      {
+        title: 'Get in Touch',
+        items: [
+          {
+            heading: 'Technical Support',
+            body: 'For questions about endpoint behavior or integration issues, email us at happyendpointhq@gmail.com.',
+          },
+          {
+            heading: 'Custom Data Requests',
+            body: 'If you need data that is not currently available in our RapidAPI catalogue, or require bulk data exports, let us know via email.',
+          },
+        ],
+      },
+      {
+        title: 'Community & Social',
+        items: [
+          {
+            heading: 'X / Twitter',
+            body: 'Follow @happyendpointhq for news and updates.',
+          },
+          {
+            heading: 'GitHub',
+            body: 'Check out our community repositories and examples.',
           },
         ],
       },
