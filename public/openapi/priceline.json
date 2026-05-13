@@ -1,0 +1,36 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Priceline API",
+    "version": "1.0.0",
+    "description": "Placeholder OpenAPI file. Replace this file with your production Priceline OpenAPI JSON."
+  },
+  "servers": [
+    {
+      "url": "https://YOUR-PRICELINE-RAPIDAPI-HOST"
+    }
+  ],
+  "paths": {
+    "/hotels/search": {
+      "get": {
+        "summary": "Search hotels",
+        "operationId": "searchPricelineHotels",
+        "parameters": [
+          {
+            "name": "destination",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "New York"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results"
+          }
+        }
+      }
+    }
+  }
+}

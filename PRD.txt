@@ -1,0 +1,62 @@
+Project OverviewProject Name: HappyEndpoint Documentation Platform (happyendpoint.com)Objective: Build a free, open-source, multi-tenant API documentation portal hosting 14+ independent REST APIs (e.g., Sephora, Ikea).Core Tech Stack: Next.js (App Router), Fumadocs, Tailwind CSS, Cloudflare Pages.Primary Metric: Search Engine Optimization (SEO). Every single API endpoint must have a permanent, clean URL indexable by Google.1. System Architecture & RoutingThe site must separate general platform guides from individual API brands. Sidebars must change contextually based on the user's path to prevent clutter.URL Mapping & Navigation TreeHomepage (/): API Catalogue / Getting Started landing page.Global Guides: /status-codes, /best-practices, /usage-limits.API Brand Roots: /sephora, /ikea, etc.Isolated Endpoint Paths: /sephora/search-by-keyword, /ikea/create-cart.Directory Layouttext├── content/
+│   ├── docs/                   # Global platform documentation
+│   │   ├── index.mdx           # happyendpoint.com homepage
+│   │   ├── status-codes.mdx    # /status-codes
+│   │   └── best-practices.mdx  # /best-practices
+│   ├── sephora/                # Auto-generated Sephora route outputs
+│   └── ikea/                   # Auto-generated Ikea route outputs
+├── openapi/
+│   ├── sephora.json            # Source Spec (~5,200 lines, includes responses)
+│   └── ikea.json               # Source Spec (~2,000 lines, includes responses)
+Use code with caution.2. SEO & Technical Performance RequirementsStatic Site Generation (SSG): All pages must compile to physical HTML files during the build pipeline. No client-side JavaScript rendering for core page content.Unique URLs: Absolutely no hash routing (#) for endpoint pages. Each API operation must exist on its own distinct sub-path.Automatic Metadata: Next.js Metadata API must auto-inject structured semantic title tags and target meta descriptions for every page (e.g., <title>GET /search-by-keyword | Sephora API Reference</title>).Sitemap Generation: Automate sitemap.xml creation on every build to declare all 250+ static paths to Google Search Console.3. Component & UI SpecificationsThree-Panel Layout:Left: Contextual Sidebar. If navigating /sephora, the sidebar displays only Sephora links and global guides. It hides links for Ikea and other brands.Middle: Formatted markdown descriptions, parameter tables, and schema constraints.Right: Code snippets and interactive playground.Interactive API Client: Embed Fumadocs’ integrated Scalar runtime playground module on endpoint sheets, allowing developers to execute real test requests directly from the browser window.Contextual Search Modal: The global search field must isolate queries based on current user paths. Searching while inside /sephora must restrict result parsing to Sephora documentation or global guide definitions.4. Supply Chain Security GuardrailsDue to the May 2026 Node ecosystem security incidents, the codebase must be hardened against malicious dependency packages.Strict Version Locking: No fuzzy version wildcards (^ or ~) allowed in dependencies. Pin explicit releases.Lifecycle Script Blockers: Enforce isolated execution environments during local development.5. Deployment Setup (Cloudflare Pages)Automation: Pushing changes to any OpenAPI JSON file in the target GitHub repository triggers an automatic remote environment compilation.Build Optimization: Next.js native asset image optimization layers must be explicitly disabled to comply with Cloudflare Pages' static serverless file limitations.AI Implementation Blueprint (Source Code)AI agent: Generate the initial codebase using these exact configurations. Do not use CommonJS require() structures; implement strictly modern ESM.package.jsonjson{
+  "name": "happyendpoint-docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "fumadocs-openapi generate && next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.2.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "fumadocs-ui": "12.0.0",
+    "fumadocs-core": "12.0.0",
+    "fumadocs-openapi": "12.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+Use code with caution.fumadocs.config.tstypescriptimport { defineConfig } from 'fumadocs-openapi/config';
+
+export default defineConfig({
+  apiSpecs: [
+    {
+      source: './openapi/sephora.json',
+      output: './content/sephora',
+      slug: 'sephora',
+    },
+    {
+      source: './openapi/ikea.json',
+      output: './content/ikea',
+      slug: 'ikea',
+    }
+  ],
+});
+Use code with caution.next.config.mjsjavascriptimport { createMDX } from 'fumadocs-mdx/next';
+
+const withMDX = createMDX();
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    unoptimized: true, // Crucial modification for Cloudflare Pages compilation
+  },
+};
+
+export default withMDX(nextConfig);
+Use code with caution..npmrctextignore-scripts=true
+Use code with caution.

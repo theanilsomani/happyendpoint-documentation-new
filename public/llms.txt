@@ -1,0 +1,24 @@
+# Happy Endpoint API Documentation
+
+Happy Endpoint sells data APIs on RapidAPI. This documentation site contains API guides and statically generated endpoint reference pages for every OpenAPI operation.
+
+Main guides:
+- Credits: /credits/
+- Status Codes: /status-codes/
+- Usage: /usage/
+- Global Parameters: /global-parameters/
+- Best Practices: /best-practices/
+- Error Handling: /error-handling/
+- Timeouts: /timeouts/
+- API Keys: /api-keys/
+- Glossary: /glossary/
+
+API references:
+- Sephora API: /sephora/
+- Tesco API: /tesco/
+- IKEA API: /ikea/
+- PropertyFinder API: /propertyfinder/
+- Bayut API: /bayut/
+- Priceline API: /priceline/
+
+Each API endpoint has its own canonical URL under /{api}/{endpoint}/.
