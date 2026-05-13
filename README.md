@@ -7,8 +7,8 @@ This is a Next.js App Router project with Fumadocs UI styling, custom OpenAPI pa
 ## Current State
 
 - Next.js 15 app using static export.
-- Fumadocs UI package is used for docs styling/provider basics.
-- The visible docs shell is custom-built to resemble the Fumadocs dark documentation style.
+- Fumadocs UI `DocsLayout` is used for the real docs shell, sidebar, search trigger, theme toggle, and root dropdown.
+- Fumadocs OpenAPI `APIPage` is used for endpoint pages, including playground-style request UI, code samples, parameter rendering, and response panels.
 - OpenAPI JSON files are parsed locally by `lib/openapi.ts`.
 - Every OpenAPI operation becomes a static page at `/{api}/{endpoint}/`.
 - Each API overview renders a short summary plus the full OpenAPI `info.description` markdown.
@@ -47,7 +47,7 @@ sephora
 tesco
 ```
 
-The current specs generate 65 endpoint reference pages. The latest verified production build generated 85 total static pages.
+The current specs generate 65 endpoint reference pages. The latest verified production build generated 84 total static pages.
 
 ## Important Files
 
@@ -71,13 +71,19 @@ components/SearchBox.tsx
   Client-side contextual search.
 
 components/ApiReference.tsx
-  Endpoint detail renderer with parameters, request body, responses, and curl sample.
+  Legacy custom endpoint renderer. Current endpoint routes use Fumadocs OpenAPI `APIPage` instead.
+
+components/FumadocsApiPage.tsx
+  Wrapper around Fumadocs OpenAPI `createOpenAPI` and `createAPIPage`.
 
 components/MarkdownBlock.tsx
   Small markdown renderer for OpenAPI `info.description` content.
 
 lib/openapi.ts
-  Reads OpenAPI JSON files and generates API/endpoint data.
+  Reads OpenAPI JSON files and generates route metadata, sitemap data, and navigation records.
+
+lib/page-tree.tsx
+  Generates the Fumadocs page tree. Each API is a root folder in the dropdown under search.
 
 lib/site.ts
   API metadata, guide content, and site constants.
@@ -122,8 +128,9 @@ Dependency safety is intentionally conservative:
 - Direct dependencies are pinned exactly.
 - `.npmrc` sets `ignore-scripts=true`.
 - `.npmrc` sets `save-exact=true`.
-- `fumadocs-openapi` is intentionally not used because it pulled vulnerable Scalar/YAML parser dependencies during audit.
-- OpenAPI parsing is handled locally for JSON specs only.
+- `fumadocs-openapi` is used intentionally for endpoint UI because it is the exact official renderer used by Fumadocs' own OpenAPI demo.
+- Keep it on the patched 10.x line and run `npm audit` after installs.
+- As of the current dependency set, `npm audit` reports moderate advisories through Next/PostCSS. Do not run `npm audit fix --force`; it suggests breaking downgrades. Recheck when Next/Fumadocs publish patched compatible versions.
 
 Recommended checks after install:
 
@@ -146,7 +153,7 @@ The production build has been verified successfully through Next directly:
 
 ```text
 Compiled successfully
-Generating static pages (85/85)
+Generating static pages (84/84)
 Exporting (2/2)
 ```
 

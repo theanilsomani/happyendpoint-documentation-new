@@ -1,16 +1,16 @@
 import { BookOpen, Boxes, Database } from 'lucide-react';
-import type { PageTree } from 'fumadocs-core/server';
+import type { Folder, Item, Root } from 'fumadocs-core/page-tree';
 import { getApiOperations } from './openapi';
 import { apiReferences, guides } from './site';
 
-const guideNodes: PageTree.Item[] = guides.map((guide) => ({
+const guideNodes: Item[] = guides.map((guide) => ({
   type: 'page',
   name: guide.title,
   url: `/${guide.slug}/`,
   description: guide.description,
 }));
 
-export const docsTree: PageTree.Root = {
+export const docsTree: Root = {
   name: 'Happy Endpoint',
   children: [
     {
@@ -31,19 +31,9 @@ export const docsTree: PageTree.Root = {
           name: 'Guides',
         },
         ...guideNodes,
-        {
-          type: 'separator',
-          name: 'APIs',
-        },
-        ...apiReferences.map<PageTree.Item>((api) => ({
-          type: 'page',
-          name: api.title,
-          url: `/${api.slug}/`,
-          description: api.description,
-        })),
       ],
     },
-    ...apiReferences.map<PageTree.Folder>((api) => {
+    ...apiReferences.map<Folder>((api) => {
       const operations = getApiOperations(api.slug);
       const groups = operations.reduce<Record<string, typeof operations>>((acc, operation) => {
         const group = operation.tags[0] || 'Endpoints';
@@ -65,12 +55,12 @@ export const docsTree: PageTree.Root = {
           url: `/${api.slug}/`,
           description: api.description,
         },
-        children: Object.entries(groups).map<PageTree.Folder>(([group, groupOperations]) => ({
+        children: Object.entries(groups).map<Folder>(([group, groupOperations]) => ({
           type: 'folder',
           name: group,
           defaultOpen: true,
           icon: <Boxes />,
-          children: groupOperations.map<PageTree.Item>((operation) => ({
+          children: groupOperations.map<Item>((operation) => ({
             type: 'page',
             name: (
               <span className="he-tree-page">

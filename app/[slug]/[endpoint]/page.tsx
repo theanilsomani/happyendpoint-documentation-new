@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { ApiReference } from '@/components/ApiReference';
 import { DocsChrome } from '@/components/DocsChrome';
+import { FumadocsApiPage } from '@/components/FumadocsApiPage';
 import { endpointUrl, getAllOperations, getOperation } from '@/lib/openapi';
 
 type Props = {
@@ -58,7 +58,7 @@ export default async function EndpointPage({ params }: Props) {
         type="application/ld+json"
       />
       <div className="he-page">
-        <ApiReference operation={operation} />
+        <FumadocsApiPage operation={operation} />
       </div>
     </DocsChrome>
   );
