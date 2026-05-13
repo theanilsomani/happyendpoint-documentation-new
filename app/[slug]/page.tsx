@@ -91,7 +91,7 @@ function ApiOverview({ slug }: { slug: string }) {
   const tags = Array.from(new Set(operations.flatMap((operation) => operation.tags))).filter(Boolean);
 
   return (
-    <DocsChrome>
+    <DocsChrome currentApi={slug}>
       <div className="mx-auto max-w-5xl px-6 py-14">
         <section>
           <div className="text-fd-primary mb-4 font-semibold">{info.group}</div>

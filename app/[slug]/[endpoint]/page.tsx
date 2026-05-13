@@ -52,12 +52,12 @@ export default async function EndpointPage({ params }: Props) {
   };
 
   return (
-    <DocsChrome>
+    <DocsChrome currentApi={slug}>
       <script
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <div className="he-page">
+      <div className="mx-auto max-w-5xl px-6 py-14">
         <FumadocsApiPage operation={operation} />
       </div>
     </DocsChrome>

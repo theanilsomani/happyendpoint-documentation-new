@@ -1,10 +1,12 @@
 import { GitFork } from 'lucide-react';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { ReactNode } from 'react';
-import { docsTree } from '@/lib/page-tree';
+import { getDocsTree } from '@/lib/page-tree';
+import { ApiDropdown } from '@/components/ApiDropdown';
 
 export function DocsChrome({
   children,
+  currentApi,
 }: {
   children: ReactNode;
   currentApi?: string;
@@ -12,8 +14,7 @@ export function DocsChrome({
 }) {
   return (
     <DocsLayout
-      tree={docsTree}
-      tabMode="top"
+      tree={getDocsTree(currentApi)}
       nav={{
         title: (
           <span className="font-semibold flex items-center gap-2">
@@ -35,6 +36,7 @@ export function DocsChrome({
       sidebar={{
         defaultOpenLevel: 1,
         prefetch: false,
+        banner: <ApiDropdown currentApiSlug={currentApi} />,
       }}
     >
       {children}

@@ -10,30 +10,24 @@ const guideNodes: Item[] = guides.map((guide) => ({
   description: guide.description,
 }));
 
-export const docsTree: Root = {
-  name: 'Happy Endpoint',
-  children: [
+export function getDocsTree(activeApiSlug?: string): Root {
+  const children: (Item | Folder | { type: 'separator'; name: string })[] = [
     {
-      type: 'folder',
-      name: 'Start',
-      root: true,
-      defaultOpen: true,
+      type: 'page',
+      name: 'API Catalogue',
+      url: '/',
       icon: <BookOpen />,
-      index: {
-        type: 'page',
-        name: 'API Catalogue',
-        url: '/',
-        description: 'Browse every Happy Endpoint API reference.',
-      },
-      children: [
-        {
-          type: 'separator',
-          name: 'Guides',
-        },
-        ...guideNodes,
-      ],
     },
-    ...apiReferences.map<Folder>((api) => {
+    {
+      type: 'separator',
+      name: 'Guides',
+    },
+    ...guideNodes,
+  ];
+
+  if (activeApiSlug) {
+    const api = apiReferences.find((a) => a.slug === activeApiSlug);
+    if (api) {
       const operations = getApiOperations(api.slug);
       const groups = operations.reduce<Record<string, typeof operations>>((acc, operation) => {
         const group = operation.tags[0] || 'Endpoints';
@@ -42,39 +36,37 @@ export const docsTree: Root = {
         return acc;
       }, {});
 
-      return {
+      children.push({
+        type: 'separator',
+        name: 'Endpoints',
+      });
+
+      const endpointFolders = Object.entries(groups).map<Folder>(([group, groupOperations]) => ({
         type: 'folder',
-        name: api.title,
-        root: true,
+        name: group,
         defaultOpen: true,
-        icon: <Database />,
-        description: api.description,
-        index: {
+        icon: <Boxes />,
+        children: groupOperations.map<Item>((operation) => ({
           type: 'page',
-          name: 'Overview',
-          url: `/${api.slug}/`,
-          description: api.description,
-        },
-        children: Object.entries(groups).map<Folder>(([group, groupOperations]) => ({
-          type: 'folder',
-          name: group,
-          defaultOpen: true,
-          icon: <Boxes />,
-          children: groupOperations.map<Item>((operation) => ({
-            type: 'page',
-            name: (
-              <span className="he-tree-page">
-                <span>{operation.summary}</span>
-                <span className={`he-method he-method-${operation.method.toLowerCase()}`}>
-                  {operation.method}
-                </span>
+          name: (
+            <span className="he-tree-page">
+              <span>{operation.summary}</span>
+              <span className={`he-method he-method-${operation.method.toLowerCase()}`}>
+                {operation.method}
               </span>
-            ),
-            url: `/${operation.apiSlug}/${operation.slug}/`,
-            description: operation.description,
-          })),
+            </span>
+          ),
+          url: `/${operation.apiSlug}/${operation.slug}/`,
+          description: operation.description,
         })),
-      };
-    }),
-  ],
-};
+      }));
+
+      children.push(...endpointFolders);
+    }
+  }
+
+  return {
+    name: 'Happy Endpoint',
+    children,
+  };
+}
