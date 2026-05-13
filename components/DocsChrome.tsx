@@ -28,7 +28,7 @@ export function DocsChrome({
           type: 'icon',
           label: 'GitHub',
           text: 'GitHub',
-          url: 'https://github.com/',
+          url: 'https://github.com/happyendpointhq/',
           icon: <GitFork />,
           external: true,
         },

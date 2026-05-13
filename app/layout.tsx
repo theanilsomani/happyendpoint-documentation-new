@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: '%s | Happy Endpoint Docs',
   },
   description:
-    'Developer documentation and API reference pages for Happy Endpoint APIs sold on RapidAPI.',
+    'The official documentation for Happy Endpoint data APIs on RapidAPI. Access real-time Retail, Real Estate, and Travel data with stable, high-performance endpoints.',
   icons: {
     icon: [
       { url: '/favicon.ico' },
