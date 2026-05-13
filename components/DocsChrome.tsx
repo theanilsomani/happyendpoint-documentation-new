@@ -36,9 +36,7 @@ export function DocsChrome({
         defaultOpenLevel: 1,
         prefetch: false,
       }}
-      themeSwitch={{
-        mode: 'light-dark-system',
-      }}
+      themeSwitch={{ enabled: false }}
     >
       {children}
     </DocsLayout>

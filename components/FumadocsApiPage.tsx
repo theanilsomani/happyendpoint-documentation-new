@@ -16,6 +16,9 @@ const apiPages = Object.fromEntries(
       api.slug,
       createAPIPage(openapi, {
         client,
+        content: {
+          renderAPIExampleUsageTabs: () => null,
+        },
       }),
     ];
   }),
