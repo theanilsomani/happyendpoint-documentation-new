@@ -13,22 +13,12 @@ export function ApiDropdown({ currentApiSlug }: { currentApiSlug?: string }) {
     {
       url: '/',
       title: 'All APIs',
-      description: 'Back to API Catalogue',
-      icon: (
-        <div className="flex size-7 items-center justify-center rounded-md border bg-fd-secondary text-fd-secondary-foreground md:size-6">
-          <Boxes className="size-4" />
-        </div>
-      ),
+      icon: <Boxes className="size-4" />,
     },
     ...apiReferences.map((api) => ({
       url: `/${api.slug}/`,
       title: api.title,
-      description: api.description,
-      icon: (
-        <div className="flex size-7 items-center justify-center rounded-md border bg-fd-primary/10 text-fd-primary md:size-6">
-          <Boxes className="size-4" />
-        </div>
-      ),
+      icon: <Boxes className="size-4" />,
     })),
   ];
 
@@ -41,9 +31,7 @@ export function ApiDropdown({ currentApiSlug }: { currentApiSlug?: string }) {
         options={options}
         placeholder={
           <div className="flex items-center gap-2">
-            <div className="flex size-6 items-center justify-center rounded-md border bg-fd-secondary text-fd-muted-foreground">
-              <Boxes className="size-3.5" />
-            </div>
+            <Boxes className="size-4 text-fd-muted-foreground" />
             <span className="text-sm font-medium text-fd-muted-foreground">Select API...</span>
           </div>
         }

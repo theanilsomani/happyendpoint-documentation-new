@@ -34,9 +34,9 @@ export function DocsChrome({
         },
       ]}
       sidebar={{
-        defaultOpenLevel: 1,
+        defaultOpenLevel: 0,
         prefetch: false,
-        banner: <ApiDropdown currentApiSlug={currentApi} />,
+        banner: <ApiDropdown key="api-dropdown" currentApiSlug={currentApi} />,
       }}
     >
       {children}

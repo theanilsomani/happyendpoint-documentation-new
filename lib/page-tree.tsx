@@ -20,49 +20,42 @@ export function getDocsTree(activeApiSlug?: string): Root {
       icon: <BookOpen />,
     },
     {
-      type: 'separator',
+      type: 'folder',
       name: 'Guides',
+      icon: <Database />,
+      children: guideNodes,
+      defaultOpen: !activeApiSlug,
     },
-    ...guideNodes,
   ];
 
   if (activeApiSlug) {
     const api = apiReferences.find((a) => a.slug === activeApiSlug);
     if (api) {
       const operations = getApiOperations(api.slug);
-      const groups = operations.reduce<Record<string, typeof operations>>((acc, operation) => {
-        const group = operation.tags[0] || 'Endpoints';
-        acc[group] ??= [];
-        acc[group].push(operation);
-        return acc;
-      }, {});
-
-      children.push({
-        type: 'separator',
-        name: 'Endpoints',
-      });
-
-      const endpointFolders = Object.entries(groups).map<Folder>(([group, groupOperations]) => ({
-        type: 'folder',
-        name: group,
-        defaultOpen: true,
-        icon: <Boxes />,
-        children: groupOperations.map<Item>((operation) => ({
-          type: 'page',
-          name: (
-            <span className="he-tree-page">
-              <span>{operation.summary}</span>
-              <span className={`he-method he-method-${operation.method.toLowerCase()}`}>
-                {operation.method}
-              </span>
+      const endpointNodes = operations.map<Item>((operation) => ({
+        type: 'page',
+        name: (
+          <span className="he-tree-page" key={`${operation.method}-${operation.path}`}>
+            <span key="summary">{operation.summary}</span>
+            <span
+              key="method"
+              className={`he-method he-method-${operation.method.toLowerCase()}`}
+            >
+              {operation.method}
             </span>
-          ),
-          url: `/${operation.apiSlug}/${operation.slug}/`,
-          description: operation.description,
-        })),
+          </span>
+        ),
+        url: `/${operation.apiSlug}/${operation.slug}/`,
+        description: operation.description,
       }));
 
-      children.push(...endpointFolders);
+      children.push({
+        type: 'folder',
+        name: 'Endpoints',
+        icon: <Boxes />,
+        children: endpointNodes,
+        defaultOpen: true,
+      });
     }
   }
 
