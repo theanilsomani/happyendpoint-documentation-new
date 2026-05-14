@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DocsChrome } from '@/components/DocsChrome';
 import { MarkdownBlock } from '@/components/MarkdownBlock';
-import { apiReferences, guides } from '@/lib/site';
+import { apiReferences, guides, site } from '@/lib/site';
 import { getApiInfo, getApiOperations } from '@/lib/openapi';
 import { Card, Cards } from 'fumadocs-ui/components/card';
 import { buttonVariants } from 'fumadocs-ui/components/ui/button';
@@ -64,8 +64,25 @@ export default async function GuideOrApiPage({ params }: Props) {
   const guide = guides.find((item) => item.slug === slug);
   if (!guide) notFound();
 
+  const guideJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.title,
+    description: guide.description,
+    url: `${site.url}/${guide.slug}/`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Happy Endpoint',
+      url: site.url,
+    },
+  };
+
   return (
     <DocsChrome>
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(guideJsonLd) }}
+        type="application/ld+json"
+      />
       <DocsPage>
         <DocsBody>
           <article className="prose prose-fd dark:prose-invert max-w-none">

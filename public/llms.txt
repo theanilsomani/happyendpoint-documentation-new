@@ -3,14 +3,15 @@
 Happy Endpoint sells data APIs on RapidAPI. This documentation site contains API guides and statically generated endpoint reference pages for every OpenAPI operation.
 
 Main guides:
-- Credits: /credits/
-- Status Codes: /status-codes/
-- Usage: /usage/
+- Getting Started: /welcome/
+- Credits & Pricing: /credits/
+- HTTP Status Codes: /status-codes/
+- API Usage Guide: /usage/
 - Global Parameters: /global-parameters/
-- Best Practices: /best-practices/
+- API Integration Best Practices: /best-practices/
 - Error Handling: /error-handling/
 - Timeouts: /timeouts/
-- API Keys: /api-keys/
+- API Key Security: /api-keys/
 - Glossary: /glossary/
 - Support: /support/
 
