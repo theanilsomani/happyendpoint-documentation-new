@@ -2,10 +2,9 @@
 @import 'fumadocs-ui/style.css';
 @import 'fumadocs-openapi/css/preset.css';
 
+/* ─── Dark theme (default) ─────────────────────────────────────────────────── */
 :root,
-.light,
 .dark,
-[data-theme="light"],
 [data-theme="dark"] {
   --fd-background: oklch(14.5% 0.035 263);
   --fd-foreground: oklch(96.5% 0.008 263);
@@ -24,6 +23,7 @@
   --fd-popover-foreground: oklch(96.5% 0.008 263);
   --fd-sidebar-width: 292px;
 
+  /* Happy Endpoint design tokens */
   --he-bg: oklch(14.5% 0.035 263);
   --he-surface: oklch(18.5% 0.036 263);
   --he-surface-2: oklch(21.5% 0.041 263);
@@ -39,8 +39,84 @@
   --he-success: oklch(70% 0.16 154);
   --he-warning: oklch(78% 0.16 86);
   --he-danger: oklch(67% 0.18 25);
+
+  /* Component-level tokens (replaces hardcoded oklch values) */
+  --he-body-accent: oklch(37% 0.12 263 / 0.18);
+  --he-body-top: oklch(15.5% 0.037 263);
+  --he-nav-bg: oklch(13.5% 0.035 263 / 0.96);
+  --he-sidebar-bg: oklch(8.5% 0.006 263);
+  --he-sidebar-fg: oklch(88% 0.012 263);
+  --he-sidebar-border: oklch(24% 0.012 263);
+  --he-sidebar-hover: oklch(17% 0.012 263);
+  --he-sidebar-active: oklch(21% 0.018 263);
+  --he-sidebar-accent: oklch(21% 0.018 263);
+  --he-sidebar-accent-fg: oklch(96.5% 0.008 263);
+  --he-sidebar-muted: oklch(21% 0.018 263);
+  --he-sidebar-muted-fg: oklch(68% 0.018 263);
+  --he-mono-bg: oklch(12% 0.035 263);
+  --he-mono-fg: oklch(84% 0.03 263);
+  --he-table-header-bg: oklch(17% 0.038 263);
+  --he-row-hover: oklch(24% 0.04 263 / 0.45);
+  --he-search-bg: oklch(13% 0.035 263);
+  --he-shadow-results: oklch(8% 0.03 263 / 0.45);
 }
 
+/* ─── Light theme ───────────────────────────────────────────────────────────── */
+.light,
+[data-theme="light"] {
+  --fd-background: oklch(97.5% 0.006 263);
+  --fd-foreground: oklch(16% 0.02 263);
+  --fd-primary: oklch(52% 0.22 263);
+  --fd-primary-foreground: oklch(99% 0.004 263);
+  --fd-muted: oklch(93% 0.01 263);
+  --fd-muted-foreground: oklch(44% 0.025 263);
+  --fd-accent: oklch(92% 0.012 263);
+  --fd-accent-foreground: oklch(16% 0.02 263);
+  --fd-border: oklch(87% 0.015 263);
+  --fd-input: oklch(94% 0.009 263);
+  --fd-ring: oklch(54% 0.2 263);
+  --fd-card: oklch(99.5% 0.003 263);
+  --fd-card-foreground: oklch(16% 0.02 263);
+  --fd-popover: oklch(100% 0 0);
+  --fd-popover-foreground: oklch(16% 0.02 263);
+
+  --he-bg: oklch(97.5% 0.006 263);
+  --he-surface: oklch(99.5% 0.003 263);
+  --he-surface-2: oklch(94% 0.01 263);
+  --he-surface-3: oklch(90% 0.013 263);
+  --he-border: oklch(87% 0.015 263);
+  --he-border-strong: oklch(75% 0.022 263);
+  --he-text: oklch(16% 0.02 263);
+  --he-muted: oklch(44% 0.025 263);
+  --he-faint: oklch(62% 0.02 263);
+  --he-blue: oklch(52% 0.22 263);
+  --he-blue-soft: oklch(93% 0.04 263);
+  --he-blue-ink: oklch(46% 0.2 263);
+  --he-success: oklch(46% 0.16 154);
+  --he-warning: oklch(52% 0.16 86);
+  --he-danger: oklch(50% 0.18 25);
+
+  --he-body-accent: oklch(70% 0.1 263 / 0.06);
+  --he-body-top: oklch(96% 0.008 263);
+  --he-nav-bg: oklch(98.5% 0.005 263 / 0.96);
+  --he-sidebar-bg: oklch(97% 0.007 263);
+  --he-sidebar-fg: oklch(22% 0.02 263);
+  --he-sidebar-border: oklch(88% 0.014 263);
+  --he-sidebar-hover: oklch(92% 0.012 263);
+  --he-sidebar-active: oklch(89% 0.015 263);
+  --he-sidebar-accent: oklch(91% 0.014 263);
+  --he-sidebar-accent-fg: oklch(16% 0.02 263);
+  --he-sidebar-muted: oklch(94% 0.01 263);
+  --he-sidebar-muted-fg: oklch(48% 0.022 263);
+  --he-mono-bg: oklch(93% 0.01 263);
+  --he-mono-fg: oklch(22% 0.025 263);
+  --he-table-header-bg: oklch(93% 0.012 263);
+  --he-row-hover: oklch(92% 0.013 263 / 0.7);
+  --he-search-bg: oklch(100% 0 0);
+  --he-shadow-results: oklch(40% 0.03 263 / 0.14);
+}
+
+/* ─── Tailwind design tokens (used by utility classes only) ─────────────────── */
 @theme {
   --color-fd-background: oklch(14.5% 0.035 263);
   --color-fd-foreground: oklch(96.5% 0.008 263);
@@ -63,6 +139,11 @@
   box-sizing: border-box;
 }
 
+/* TODO: remove when light mode design is ready */
+[aria-label="Toggle Theme"] {
+  display: none !important;
+}
+
 html {
   background: var(--he-bg);
 }
@@ -70,8 +151,8 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 8% 0%, oklch(37% 0.12 263 / 0.18), transparent 32rem),
-    linear-gradient(180deg, oklch(15.5% 0.037 263), var(--he-bg) 22rem);
+    radial-gradient(circle at 8% 0%, var(--he-body-accent), transparent 32rem),
+    linear-gradient(180deg, var(--he-body-top), var(--he-bg) 22rem);
   color: var(--he-text);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -94,30 +175,30 @@ a {
   background: oklch(62% 0.22 263 / 0.35);
 }
 
-/* Fumadocs shell */
+/* ─── Fumadocs shell ─────────────────────────────────────────────────────────── */
 .fd-nav {
   min-height: 76px !important;
   border-bottom: 1px solid var(--he-border) !important;
-  background: oklch(13.5% 0.035 263 / 0.96) !important;
+  background: var(--he-nav-bg) !important;
 }
 
 #nd-sidebar,
 .fd-sidebar {
-  border-right: 1px solid oklch(24% 0.012 263) !important;
-  background: oklch(8.5% 0.006 263) !important;
-  color: oklch(88% 0.012 263) !important;
-  --color-fd-accent: oklch(21% 0.018 263);
-  --color-fd-accent-foreground: oklch(96.5% 0.008 263);
-  --color-fd-secondary: oklch(16% 0.012 263);
-  --color-fd-muted: oklch(13% 0.01 263);
-  --color-fd-muted-foreground: oklch(68% 0.018 263);
+  border-right: 1px solid var(--he-sidebar-border) !important;
+  background: var(--he-sidebar-bg) !important;
+  color: var(--he-sidebar-fg) !important;
+  --color-fd-accent: var(--he-sidebar-accent);
+  --color-fd-accent-foreground: var(--he-sidebar-accent-fg);
+  --color-fd-secondary: var(--he-sidebar-muted);
+  --color-fd-muted: var(--he-sidebar-muted);
+  --color-fd-muted-foreground: var(--he-sidebar-muted-fg);
 }
 
 #nd-sidebar [data-sidebar-panel],
 #nd-sidebar [data-sidebar-placeholder],
 [role="complementary"] {
-  border-color: oklch(24% 0.012 263) !important;
-  background: oklch(8.5% 0.006 263) !important;
+  border-color: var(--he-sidebar-border) !important;
+  background: var(--he-sidebar-bg) !important;
 }
 
 .fd-nav a,
@@ -129,16 +210,17 @@ a {
 .fd-nav a:hover,
 #nd-sidebar a:hover,
 .fd-sidebar a:hover {
-  background: oklch(17% 0.012 263) !important;
+  background: var(--he-sidebar-hover) !important;
 }
 
 #nd-sidebar [data-active="true"],
 .fd-sidebar [data-active="true"],
 .fd-nav [data-active="true"] {
-  background: oklch(21% 0.018 263) !important;
+  background: var(--he-sidebar-active) !important;
   color: var(--he-text) !important;
 }
 
+/* ─── Brand ──────────────────────────────────────────────────────────────────── */
 .he-brand {
   display: inline-flex;
   align-items: center;
@@ -165,7 +247,7 @@ a {
   content: "";
 }
 
-/* Shared product components */
+/* ─── Shared product components ──────────────────────────────────────────────── */
 .he-kicker {
   display: inline-flex;
   align-items: center;
@@ -227,7 +309,7 @@ a {
 }
 
 .he-button-primary:hover {
-  background: oklch(66% 0.22 263);
+  background: oklch(56% 0.22 263);
   transform: translateY(-1px);
 }
 
@@ -238,7 +320,7 @@ a {
 }
 
 .he-button-secondary:hover {
-  border-color: oklch(48% 0.09 263);
+  border-color: var(--he-border-strong);
   background: var(--he-surface-3);
 }
 
@@ -261,7 +343,7 @@ a {
 
 .he-card:hover,
 .fd-card:hover {
-  border-color: oklch(45% 0.09 263) !important;
+  border-color: var(--he-border-strong) !important;
   background: var(--he-surface-2) !important;
   box-shadow: 0 22px 54px oklch(8% 0.03 263 / 0.32) !important;
 }
@@ -329,7 +411,7 @@ a {
 }
 
 .he-api-card:hover {
-  border-color: oklch(48% 0.1 263);
+  border-color: var(--he-border-strong);
   background: var(--he-surface-2);
   transform: translateY(-2px);
 }
@@ -373,7 +455,7 @@ a {
   gap: 0.35rem;
 }
 
-/* Sidebar method badges */
+/* ─── Sidebar method badges ───────────────────────────────────────────────────── */
 .he-tree-page {
   align-items: center;
   display: flex;
@@ -428,13 +510,13 @@ a {
   color: var(--he-danger);
 }
 
-/* API reference */
+/* ─── API reference ───────────────────────────────────────────────────────────── */
 .mono-box {
   overflow-x: auto;
   border: 1px solid var(--he-border);
   border-radius: 8px;
-  background: oklch(12% 0.035 263);
-  color: oklch(84% 0.03 263);
+  background: var(--he-mono-bg);
+  color: var(--he-mono-fg);
   line-height: 1.7;
   padding: 1rem;
 }
@@ -448,7 +530,7 @@ thead {
 }
 
 tbody tr:hover {
-  background: oklch(24% 0.04 263 / 0.45);
+  background: var(--he-row-hover);
 }
 
 .he-doc-section {
@@ -495,7 +577,7 @@ tbody tr:hover {
 }
 
 .he-doc-table th {
-  background: oklch(17% 0.038 263);
+  background: var(--he-table-header-bg);
   color: var(--he-text);
   font-size: 0.78rem;
   font-weight: 760;
@@ -515,7 +597,7 @@ tbody tr:hover {
   display: inline-flex;
   border: 1px solid var(--he-border);
   border-radius: 5px;
-  background: oklch(13% 0.035 263);
+  background: var(--he-mono-bg);
   color: var(--he-text);
   font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
   font-size: 0.8rem;
@@ -523,7 +605,7 @@ tbody tr:hover {
   padding: 0.34rem 0.45rem;
 }
 
-/* API Markdown contents */
+/* ─── API Markdown contents ───────────────────────────────────────────────────── */
 .markdown-panel {
   margin-top: 3rem;
 }
@@ -598,7 +680,7 @@ tbody tr:hover {
   margin-top: 0.5rem;
 }
 
-/* Search component */
+/* ─── Search component ────────────────────────────────────────────────────────── */
 .search-wrap {
   position: relative;
   max-width: 580px;
@@ -619,7 +701,7 @@ tbody tr:hover {
   height: 46px;
   border: 1px solid var(--he-border);
   border-radius: 8px;
-  background: oklch(13% 0.035 263);
+  background: var(--he-search-bg);
   color: var(--he-text);
   padding: 0 2.7rem;
   outline: none;
@@ -657,7 +739,7 @@ tbody tr:hover {
   border: 1px solid var(--he-border);
   border-radius: 8px;
   background: var(--fd-popover);
-  box-shadow: 0 20px 54px oklch(8% 0.03 263 / 0.45);
+  box-shadow: 0 20px 54px var(--he-shadow-results);
 }
 
 .search-result,
@@ -684,6 +766,7 @@ tbody tr:hover {
   font-size: 0.8rem;
 }
 
+/* ─── Responsive ──────────────────────────────────────────────────────────────── */
 @media (min-width: 640px) {
   .he-title {
     font-size: 1.85rem;
