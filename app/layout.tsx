@@ -19,6 +19,14 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-touch-icon.png',
   },
+  openGraph: {
+    siteName: 'Happy Endpoint Docs',
+    images: [{ url: '/og/image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@happyendpointhq',
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

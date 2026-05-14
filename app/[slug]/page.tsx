@@ -34,6 +34,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       alternates: {
         canonical: `/${slug}/`,
       },
+      openGraph: {
+        images: [{ url: `/og/${slug}/image.png`, width: 1200, height: 630 }],
+      },
     };
   }
 
@@ -44,6 +47,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: guide.description,
     alternates: {
       canonical: `/${guide.slug}/`,
+    },
+    openGraph: {
+      images: [{ url: `/og/${guide.slug}/image.png`, width: 1200, height: 630 }],
     },
   };
 }

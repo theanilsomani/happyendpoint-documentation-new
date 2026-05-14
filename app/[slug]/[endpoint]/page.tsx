@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: operation.summary || operation.description,
       url: endpointUrl(operation),
       type: 'article',
+      images: [{ url: `/og/${slug}/${endpoint}/image.png`, width: 1200, height: 630 }],
     },
   };
 }

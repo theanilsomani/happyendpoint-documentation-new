@@ -13,6 +13,16 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  openGraph: {
+    images: [{ url: '/og/image.png', width: 1200, height: 630 }],
+  },
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Happy Endpoint API Documentation',
+  url: 'https://docs.happyendpoint.com',
 };
 
 export default function HomePage() {
@@ -24,6 +34,10 @@ export default function HomePage() {
 
   return (
     <DocsChrome>
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        type="application/ld+json"
+      />
       <div className="mx-auto max-w-7xl px-6 py-14 sm:py-20 lg:px-12">
         <section>
           <div className="text-fd-primary mb-5 text-sm font-semibold flex items-center gap-2">
@@ -37,12 +51,14 @@ export default function HomePage() {
             data APIs sold on RapidAPI.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/introduction/"
+            <a
+              href="https://rapidapi.com/user/happyendpoint"
+              rel="noreferrer"
+              target="_blank"
               className="bg-[#2563eb] text-white hover:bg-[#1d4ed8] inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors"
             >
               Get started - For free <ArrowRight className="size-4" />
-            </Link>
+            </a>
             <Link
               href="#apis"
               className="bg-fd-secondary text-fd-secondary-foreground hover:bg-fd-secondary/80 inline-flex items-center gap-2 rounded-lg border border-fd-border px-5 py-2.5 text-sm font-semibold transition-colors"

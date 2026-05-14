@@ -12,6 +12,7 @@ Main guides:
 - Timeouts: /timeouts/
 - API Keys: /api-keys/
 - Glossary: /glossary/
+- Support: /support/
 
 API references:
 - Sephora API: /sephora/
@@ -19,6 +20,7 @@ API references:
 - IKEA API: /ikea/
 - PropertyFinder API: /propertyfinder/
 - Bayut API: /bayut/
-- Priceline API: /priceline/
+- Fotocasa API: /fotocasa/
+- UAE Real Estate API: /uae-realestate/
 
 Each API endpoint has its own canonical URL under /{api}/{endpoint}/.
