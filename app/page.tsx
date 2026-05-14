@@ -62,7 +62,7 @@ export default function HomePage() {
               HTTP endpoints for clean, structured web data. Browse API references, check
               parameters, and test live data through RapidAPI.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href="https://rapidapi.com/user/happyendpoint"
                 rel="noreferrer"
@@ -100,7 +100,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+        <div className="mt-10 grid gap-3 sm:grid-cols-3 sm:gap-4">
           <Stat icon={<Database className="size-5" />} label="Total APIs" value="11+" />
           <Stat icon={<PlugZap className="size-5" />} label="Endpoints" value={String(endpointCount)} />
           <Stat icon={<ShieldCheck className="size-5" />} label="Service Score" value="9.9/10" />

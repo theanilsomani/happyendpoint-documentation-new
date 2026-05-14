@@ -150,6 +150,7 @@ html {
 
 body {
   min-height: 100vh;
+  overflow-x: clip;
   background:
     radial-gradient(circle at 8% 0%, var(--he-body-accent), transparent 32rem),
     linear-gradient(180deg, var(--he-body-top), var(--he-bg) 22rem);
@@ -788,7 +789,66 @@ tbody tr:hover {
     font-size: 1.48rem;
   }
 
+  .he-lede {
+    font-size: 0.94rem;
+  }
+
+  /* Horizontal stat cards for single-col mobile layout */
+  .he-stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 0;
+    padding: 0.85rem 1rem;
+  }
+
+  .he-stat-value {
+    margin-top: 0;
+    font-size: 1.35rem;
+    white-space: nowrap;
+  }
+
+  /* Stack buttons full-width */
+  .he-button-primary,
+  .he-button-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* API cards: no minimum height */
   .he-api-card {
     min-height: 0;
   }
+
+  /* Table: tighter cells */
+  .he-doc-table th,
+  .he-doc-table td {
+    padding: 0.6rem 0.65rem;
+  }
+
+  .he-doc-table th {
+    font-size: 0.7rem;
+  }
+
+  .he-doc-table td {
+    font-size: 0.85rem;
+  }
+}
+
+/* Truncate long API paths inside endpoint cards */
+.he-api-meta {
+  flex-wrap: nowrap;
+}
+
+.he-api-meta > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.he-api-meta > span:last-child {
+  flex: 0 0 auto;
 }

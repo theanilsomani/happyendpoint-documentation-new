@@ -190,7 +190,7 @@ function ApiOverview({ slug }: { slug: string }) {
             </div>
             <h1 className="he-title">{info.title}</h1>
             <p className="he-lede mt-4">{info.description}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a className="he-button-primary" href={info.rapidApiUrl} rel="noreferrer" target="_blank">
                 Open on RapidAPI <ExternalLink aria-hidden="true" className="ml-2 size-4" />
               </a>
@@ -201,7 +201,7 @@ function ApiOverview({ slug }: { slug: string }) {
             </div>
           </section>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          <div className="mt-12 grid gap-3 sm:grid-cols-3 sm:gap-4">
             <Fact icon={<Tags className="size-5" />} label="Version" value={info.version} />
             <Fact icon={<Server className="size-5" />} label="Server" value={info.serverUrl} />
             <Fact icon={<Boxes className="size-5" />} label="Endpoints" value={String(operations.length)} />
