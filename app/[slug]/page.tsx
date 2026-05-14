@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { DocsChrome } from '@/components/DocsChrome';
 import { MarkdownBlock } from '@/components/MarkdownBlock';
-import { apiReferences, guides, site } from '@/lib/site';
+import { apiReferences, guides, site, type Guide } from '@/lib/site';
 import { getApiInfo, getApiOperations } from '@/lib/openapi';
 
 type Props = {
@@ -72,28 +72,104 @@ export default async function GuideOrApiPage({ params }: Props) {
             <h1 className="he-title">{guide.title}</h1>
             <p className="he-lede mt-4">{guide.intro}</p>
 
-            <div className="mt-12 space-y-10">
-              {guide.sections.map((section) => (
-                <section id={section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')} key={section.title}>
-                  <h2 className="text-xl font-bold text-fd-foreground">{section.title}</h2>
-                  <div className="mt-5 grid gap-4 md:grid-cols-2">
-                    {section.items.map((item) => (
-                      <div className="he-card" key={item.heading}>
-                        <h3 className="m-0 text-base font-bold text-fd-foreground">{item.heading}</h3>
-                        <p className="m-0 mt-2 text-sm leading-6 text-fd-muted-foreground">
-                          {item.body}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
+            <GuideContent guide={guide} />
           </article>
         </DocsBody>
       </DocsPage>
     </DocsChrome>
   );
+}
+
+function GuideContent({ guide }: { guide: Guide }) {
+  if (guide.slug === 'status-codes') return <StatusCodesGuide guide={guide} />;
+  if (guide.slug === 'glossary') return <GlossaryGuide guide={guide} />;
+
+  return (
+    <div className="mt-10 space-y-10">
+      {guide.sections.map((section) => (
+        <section className="he-doc-section" id={slugify(section.title)} key={section.title}>
+          <h2 className="text-xl font-bold text-fd-foreground">{section.title}</h2>
+          <div className="he-doc-list">
+            {section.items.map((item) => (
+              <div className="he-doc-item" key={item.heading}>
+                <h3>{item.heading}</h3>
+                <p>{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function StatusCodesGuide({ guide }: { guide: Guide }) {
+  const rows = guide.sections.flatMap((section) =>
+    section.items.map((item) => {
+      const [code, ...statusParts] = item.heading.split(' ');
+      return {
+        code,
+        status: statusParts.join(' ') || item.heading,
+        description: item.body,
+      };
+    }),
+  );
+
+  return (
+    <section className="he-doc-section mt-10" id="response-reference">
+      <h2 className="text-xl font-bold text-fd-foreground">Response Reference</h2>
+      <div className="mt-5 overflow-x-auto">
+        <table className="he-doc-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={`${row.code}-${row.status}`}>
+                <td>
+                  <span className="he-code-pill">{row.code}</span>
+                </td>
+                <td className="font-semibold text-fd-foreground">{row.status}</td>
+                <td>{row.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+function GlossaryGuide({ guide }: { guide: Guide }) {
+  return (
+    <div className="mt-10 space-y-10">
+      {guide.sections.map((section) => (
+        <section className="he-doc-section" id={slugify(section.title)} key={section.title}>
+          <h2 className="text-xl font-bold text-fd-foreground">{section.title}</h2>
+          <dl className="he-doc-list">
+            {section.items.map((item) => (
+              <div className="he-doc-item" key={item.heading}>
+                <dt>
+                  <h3>{item.heading}</h3>
+                </dt>
+                <dd className="m-0">
+                  <p>{item.body}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function slugify(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 }
 
 function ApiOverview({ slug }: { slug: string }) {

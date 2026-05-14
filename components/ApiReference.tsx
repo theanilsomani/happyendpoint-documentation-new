@@ -64,18 +64,30 @@ export function ApiReference({ operation }: { operation: ApiOperation }) {
 
         <section id="responses">
           <h2 className="he-section-title">Responses</h2>
-          <div className="space-y-3">
-            {operation.responses.length ? (
-              operation.responses.map((response) => (
-                <div className="he-card min-h-0" key={response.code}>
-                  <div className="font-mono text-sm font-semibold">{response.code}</div>
-                  <p className="m-0 mt-1 text-sm">{response.description}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-fd-muted-foreground">Response details are defined in the OpenAPI source for this endpoint.</p>
-            )}
-          </div>
+          {operation.responses.length ? (
+            <div className="overflow-x-auto">
+              <table className="he-doc-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {operation.responses.map((response) => (
+                    <tr key={response.code}>
+                      <td>
+                        <span className="he-code-pill">{response.code}</span>
+                      </td>
+                      <td>{response.description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="text-fd-muted-foreground">Response details are defined in the OpenAPI source for this endpoint.</p>
+          )}
         </section>
       </article>
 
