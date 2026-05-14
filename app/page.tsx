@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   },
 };
 
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Happy Endpoint API Documentation',
+  url: 'https://docs.happyendpoint.com',
+};
+
 export default function HomePage() {
   const groups = groupedApis();
   const endpointCount = apiReferences.reduce(
@@ -28,7 +35,11 @@ export default function HomePage() {
 
   return (
     <DocsChrome>
-      <div className="mx-auto max-w-7xl px-5 py-10 sm:py-14 lg:px-10">
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        type="application/ld+json"
+      />
+      <main className="mx-auto max-w-7xl px-5 py-10 sm:py-14 lg:px-10">
         <section className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-end">
           <div>
             <div className="mb-5 flex flex-wrap gap-2">
@@ -149,7 +160,7 @@ export default function HomePage() {
             </div>
           ))}
         </section>
-      </div>
+      </main>
     </DocsChrome>
   );
 }

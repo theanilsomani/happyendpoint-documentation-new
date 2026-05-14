@@ -22,10 +22,10 @@ export function DocsChrome({
             <Image
               alt="Happy Endpoint"
               className="he-brand-logo"
-              height={58}
+              height={56}
               priority
-              src="/happyendpoint-com-logo.png"
-              width={220}
+              src="/happyendpoint-com-logo.webp"
+              width={200}
             />
           </span>
         ),

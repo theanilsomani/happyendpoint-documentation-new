@@ -33,7 +33,7 @@
   --he-text: oklch(96.5% 0.008 263);
   --he-muted: oklch(74% 0.027 263);
   --he-faint: oklch(58% 0.03 263);
-  --he-blue: oklch(62% 0.22 263);
+  --he-blue: oklch(55% 0.22 263);
   --he-blue-soft: oklch(25% 0.08 263);
   --he-blue-ink: oklch(72% 0.16 263);
   --he-success: oklch(70% 0.16 154);
@@ -309,7 +309,7 @@ a {
 }
 
 .he-button-primary:hover {
-  background: oklch(56% 0.22 263);
+  background: oklch(59% 0.22 263);
   transform: translateY(-1px);
 }
 
