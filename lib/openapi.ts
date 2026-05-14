@@ -38,7 +38,21 @@ export type ApiOperation = Operation;
 
 export function getSpec(apiSlug: string): Json {
   const file = path.join(process.cwd(), 'openapi', `${apiSlug}.json`);
-  return JSON.parse(fs.readFileSync(file, 'utf8')) as Json;
+  if (!fs.existsSync(file)) {
+    return {
+      info: { title: apiSlug, version: '1.0' },
+      paths: {},
+    };
+  }
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf8')) as Json;
+  } catch (e) {
+    console.error(`Error parsing OpenAPI spec for ${apiSlug}:`, e);
+    return {
+      info: { title: apiSlug, version: '1.0' },
+      paths: {},
+    };
+  }
 }
 
 export function getApiInfo(apiSlug: string) {

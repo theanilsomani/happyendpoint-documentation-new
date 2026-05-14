@@ -73,13 +73,29 @@ export const apiReferences: ApiMeta[] = [
       'UAE real estate search, listing detail, agency, location, and price data.',
     rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/bayut14/',
   },
+  // {
+  //   slug: 'priceline',
+  //   title: 'Priceline API',
+  //   group: 'Travel APIs',
+  //   description:
+  //     'Hotel, destination, pricing, and travel discovery data for booking workflows.',
+  //   rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/priceline-api-pro/',
+  // },
   {
-    slug: 'priceline',
-    title: 'Priceline API',
-    group: 'Travel APIs',
+    slug: 'fotocasa',
+    title: 'Fotocasa API',
+    group: 'Real Estate APIs',
     description:
-      'Hotel, destination, pricing, and travel discovery data for booking workflows.',
-    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/priceline-api-pro/',
+      'Spanish real estate listings, property search, and market data across Spain.',
+    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/fotocasa3',
+  },
+  {
+    slug: 'uae-realestate',
+    title: 'UAE Real Estate API',
+    group: 'Real Estate APIs',
+    description:
+      'Comprehensive UAE property data combining Bayut and PropertyFinder listings.',
+    rapidApiUrl: 'https://rapidapi.com/happyendpoint/api/uae-real-estate-api',
   },
 ];
 
