@@ -102,7 +102,7 @@ export const apiReferences: ApiMeta[] = [
 export const guides: Guide[] = [
   {
     slug: 'welcome',
-    title: 'Welcome',
+    title: 'Getting Started',
     description:
       'Introduction to Happy Endpoint APIs, official links, and support channels.',
     intro:
@@ -146,7 +146,7 @@ export const guides: Guide[] = [
   },
   {
     slug: 'credits',
-    title: 'Credits',
+    title: 'Credits & Pricing',
     description:
       'Understanding RapidAPI credits, plan quotas, and request limits for Happy Endpoint.',
     intro:
@@ -169,7 +169,7 @@ export const guides: Guide[] = [
   },
   {
     slug: 'status-codes',
-    title: 'Status Codes',
+    title: 'HTTP Status Codes',
     description:
       'HTTP status code reference for Happy Endpoint APIs, from success to rate limits.',
     intro:
@@ -183,8 +183,32 @@ export const guides: Guide[] = [
             body: 'The request was successful and the data is in the response body. If the search yielded no results, you will still get a 200 with an empty data array.',
           },
           {
+            heading: '400 Bad Request',
+            body: 'A required parameter is missing, has an invalid value, or the request body is malformed. Check the endpoint reference for required fields and correct formats.',
+          },
+          {
+            heading: '401 Unauthorized',
+            body: 'The X-RapidAPI-Key header is missing or the key is invalid. Verify the key in your RapidAPI dashboard and ensure it is sent in the request headers.',
+          },
+          {
+            heading: '403 Forbidden',
+            body: 'Your key is valid but does not have access to this endpoint. Check that your RapidAPI subscription is active and covers the endpoint you are calling.',
+          },
+          {
+            heading: '404 Not Found',
+            body: 'The requested resource or endpoint path does not exist. Check the URL, path parameters, and that you are calling the correct API host.',
+          },
+          {
             heading: '429 Rate Limit',
-            body: 'You have exceeded your plan’s rate limit. We recommend implementing exponential backoff or upgrading to a higher tier on RapidAPI.',
+            body: 'You have exceeded your plan\'s rate limit. Implement exponential backoff and retry after the window resets, or upgrade to a higher tier on RapidAPI.',
+          },
+          {
+            heading: '500 Internal Server Error',
+            body: 'An unexpected error occurred on our side. These are rare and transient. Retry with backoff. If the error persists, contact support.',
+          },
+          {
+            heading: '503 Service Unavailable',
+            body: 'The upstream data source is temporarily unavailable. Retry after a short delay. Monitor the RapidAPI status page if the issue continues.',
           },
         ],
       },
@@ -192,7 +216,7 @@ export const guides: Guide[] = [
   },
   {
     slug: 'usage',
-    title: 'Usage',
+    title: 'API Usage Guide',
     description:
       'Production usage guidance for validation, caching, batching, logging, and response handling.',
     intro:
@@ -255,7 +279,7 @@ export const guides: Guide[] = [
   },
   {
     slug: 'best-practices',
-    title: 'Best Practices',
+    title: 'API Integration Best Practices',
     description:
       'Build reliable, secure, and efficient Happy Endpoint API integrations.',
     intro:
@@ -336,7 +360,7 @@ export const guides: Guide[] = [
   },
   {
     slug: 'api-keys',
-    title: 'API Keys',
+    title: 'API Key Security',
     description:
       'API key security for RapidAPI integrations, including storage, rotation, and monitoring.',
     intro:
@@ -373,20 +397,52 @@ export const guides: Guide[] = [
         title: 'Terms',
         items: [
           {
+            heading: 'API',
+            body: 'Application Programming Interface. A defined contract for how software components exchange data. Happy Endpoint APIs use HTTP and return JSON.',
+          },
+          {
             heading: 'Endpoint',
-            body: 'A specific HTTP method and path, such as GET /search or GET /product-details.',
+            body: 'A specific HTTP method and path that performs one operation, such as GET /search or GET /product-details.',
           },
           {
             heading: 'OpenAPI',
-            body: 'A machine-readable specification for endpoints, parameters, responses, and authentication.',
+            body: 'A machine-readable specification (formerly Swagger) that describes endpoints, parameters, request bodies, responses, and authentication for an HTTP API.',
+          },
+          {
+            heading: 'RapidAPI',
+            body: 'The marketplace where Happy Endpoint APIs are listed, subscribed to, and authenticated. All billing, quota tracking, and key management happen through RapidAPI.',
           },
           {
             heading: 'Rate limit',
-            body: 'A request limit applied by RapidAPI based on your plan or quota window.',
+            body: 'A ceiling on the number of requests your plan allows within a given time window. Exceeding the limit returns a 429 response.',
+          },
+          {
+            heading: 'Credit',
+            body: 'A unit of API usage tracked by RapidAPI. Each plan includes a monthly credit allotment. One API call typically consumes one or more credits depending on the endpoint.',
+          },
+          {
+            heading: 'Quota',
+            body: 'The total number of requests or credits available to your subscription in a billing period. Quotas reset monthly.',
           },
           {
             heading: 'Backoff',
-            body: 'A retry strategy that waits longer after each failed attempt.',
+            body: 'A retry strategy that increases the wait time between attempts after each failure. Exponential backoff (e.g., 1s, 2s, 4s, 8s) prevents thundering-herd problems.',
+          },
+          {
+            heading: 'Pagination',
+            body: 'A pattern for retrieving large datasets in pages. Endpoints that support pagination accept a page or offset parameter and return a total count alongside results.',
+          },
+          {
+            heading: 'Query parameter',
+            body: 'A key-value pair appended to the URL after a ? character (e.g., ?query=chair&page=2). Most Happy Endpoint search endpoints use query parameters.',
+          },
+          {
+            heading: 'JSON',
+            body: 'JavaScript Object Notation. The data format returned by all Happy Endpoint APIs. It is human-readable, widely supported, and easy to parse in any language.',
+          },
+          {
+            heading: 'Canonical URL',
+            body: 'The authoritative URL for a resource. Used in HTTP redirects and HTML link tags to prevent duplicate content.',
           },
         ],
       },

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!operation) return {};
 
   return {
-    title: `${operation.method} ${operation.path} | ${operation.apiTitle} Reference`,
+    title: `${operation.summary} — ${operation.apiTitle} Reference`,
     description: operation.summary || operation.description,
     alternates: {
       canonical: `/${slug}/${endpoint}/`,

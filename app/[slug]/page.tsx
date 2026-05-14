@@ -100,8 +100,26 @@ function ApiOverview({ slug }: { slug: string }) {
   const operations = getApiOperations(slug);
   const tags = Array.from(new Set(operations.flatMap((operation) => operation.tags))).filter(Boolean);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: info.title,
+    description: info.description,
+    applicationCategory: 'DeveloperApplication',
+    url: info.rapidApiUrl,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  };
+
   return (
     <DocsChrome currentApi={slug}>
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        type="application/ld+json"
+      />
       <DocsPage>
         <DocsBody>
           <section>
