@@ -29,10 +29,10 @@ export default function HomePage() {
           <div className="text-fd-primary mb-5 text-sm font-semibold flex items-center gap-2">
             <Sparkles aria-hidden="true" className="size-4" /> Data APIs for production teams
           </div>
-          <h1 className="text-fd-foreground text-4xl sm:text-5xl font-bold tracking-tight">
+          <h1 className="text-white text-4xl sm:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white to-slate-400">
             Happy Endpoint API Documentation
           </h1>
-          <p className="text-fd-muted-foreground mt-5 max-w-2xl text-lg leading-relaxed">
+          <p className="text-slate-400 mt-6 max-w-2xl text-lg leading-relaxed font-medium">
             Browse endpoint-level documentation for retail, real estate, travel, and marketplace
             data APIs sold on RapidAPI.
           </p>
