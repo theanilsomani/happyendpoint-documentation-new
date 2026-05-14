@@ -36,6 +36,20 @@ export default function HomePage() {
             Browse endpoint-level documentation for retail, real estate, travel, and marketplace
             data APIs sold on RapidAPI.
           </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link
+              href="/introduction/"
+              className="bg-[#2563eb] text-white hover:bg-[#1d4ed8] inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors"
+            >
+              Get started - For free <ArrowRight className="size-4" />
+            </Link>
+            <Link
+              href="#apis"
+              className="bg-fd-secondary text-fd-secondary-foreground hover:bg-fd-secondary/80 inline-flex items-center gap-2 rounded-lg border border-fd-border px-5 py-2.5 text-sm font-semibold transition-colors"
+            >
+              Browse API library
+            </Link>
+          </div>
         </section>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
@@ -44,7 +58,7 @@ export default function HomePage() {
           <Stat icon={<ShieldCheck className="size-5" />} label="Service Score" value="9.9/10" />
         </div>
 
-        <section className="mt-16">
+        <section className="mt-16" id="apis">
           {Object.entries(groups).map(([group, apis]) => (
             <div className="mt-12" key={group}>
               <h2 className="text-fd-foreground mb-4 text-xl font-semibold">{group}</h2>
