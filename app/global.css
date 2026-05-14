@@ -3,7 +3,9 @@
 @import 'fumadocs-openapi/css/preset.css';
 
 :root,
+.light,
 .dark,
+[data-theme="light"],
 [data-theme="dark"] {
   --fd-background: oklch(14.5% 0.035 263);
   --fd-foreground: oklch(96.5% 0.008 263);
@@ -99,11 +101,20 @@ a {
   background: oklch(13.5% 0.035 263 / 0.96) !important;
 }
 
+#nd-sidebar,
 .fd-sidebar {
   border-right: 1px solid oklch(24% 0.012 263) !important;
   background: oklch(8.5% 0.006 263) !important;
+  color: oklch(88% 0.012 263) !important;
+  --color-fd-accent: oklch(21% 0.018 263);
+  --color-fd-accent-foreground: oklch(96.5% 0.008 263);
+  --color-fd-secondary: oklch(16% 0.012 263);
+  --color-fd-muted: oklch(13% 0.01 263);
+  --color-fd-muted-foreground: oklch(68% 0.018 263);
 }
 
+#nd-sidebar [data-sidebar-panel],
+#nd-sidebar [data-sidebar-placeholder],
 [role="complementary"] {
   border-color: oklch(24% 0.012 263) !important;
   background: oklch(8.5% 0.006 263) !important;
@@ -116,10 +127,12 @@ a {
 }
 
 .fd-nav a:hover,
+#nd-sidebar a:hover,
 .fd-sidebar a:hover {
   background: oklch(17% 0.012 263) !important;
 }
 
+#nd-sidebar [data-active="true"],
 .fd-sidebar [data-active="true"],
 .fd-nav [data-active="true"] {
   background: oklch(21% 0.018 263) !important;

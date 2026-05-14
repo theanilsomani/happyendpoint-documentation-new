@@ -33,7 +33,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen">
-        <RootProvider>
+        <RootProvider
+          theme={{
+            defaultTheme: 'dark',
+            enableSystem: false,
+            forcedTheme: 'dark',
+          }}
+        >
           {children}
         </RootProvider>
       </body>
