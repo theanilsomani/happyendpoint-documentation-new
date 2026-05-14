@@ -201,7 +201,7 @@ function ApiOverview({ slug }: { slug: string }) {
             </div>
           </section>
 
-          <div className="mt-12 grid gap-3 sm:grid-cols-3 sm:gap-4">
+          <div className="mt-8 grid grid-cols-3 gap-2 sm:mt-12 sm:gap-4">
             <Fact icon={<Tags className="size-5" />} label="Version" value={info.version} />
             <Fact icon={<Server className="size-5" />} label="Server" value={info.serverUrl} />
             <Fact icon={<Boxes className="size-5" />} label="Endpoints" value={String(operations.length)} />

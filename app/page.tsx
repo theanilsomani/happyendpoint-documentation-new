@@ -2,7 +2,7 @@ import { ArrowRight, Boxes, Database, PlugZap, Search, ShieldCheck, Sparkles, St
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { DocsChrome } from '@/components/DocsChrome';
+import { HomeChrome } from '@/components/DocsChrome';
 import { SearchBox } from '@/components/SearchBox';
 import { getApiOperations, getSearchRecords } from '@/lib/openapi';
 import { apiReferences, groupedApis, guides, site } from '@/lib/site';
@@ -34,13 +34,13 @@ export default function HomePage() {
   const searchRecords = getSearchRecords();
 
   return (
-    <DocsChrome>
+    <HomeChrome>
       <script
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         type="application/ld+json"
       />
-      <main className="mx-auto max-w-7xl px-5 py-10 sm:py-14 lg:px-10">
-        <section className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-end">
+      <main className="mx-auto max-w-7xl px-5 py-6 sm:py-10 lg:px-10 lg:py-14">
+        <section className="grid gap-6 lg:gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-end">
           <div>
             <div className="mb-5 flex flex-wrap gap-2">
               <span className="he-chip">
@@ -100,13 +100,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className="mt-10 grid gap-3 sm:grid-cols-3 sm:gap-4">
+        <div className="mt-6 grid grid-cols-3 gap-2 sm:mt-10 sm:gap-4">
           <Stat icon={<Database className="size-5" />} label="Total APIs" value="11+" />
           <Stat icon={<PlugZap className="size-5" />} label="Endpoints" value={String(endpointCount)} />
           <Stat icon={<ShieldCheck className="size-5" />} label="Service Score" value="9.9/10" />
         </div>
 
-        <section className="mt-14" id="apis">
+        <section className="mt-8 sm:mt-14" id="apis">
           <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <div className="he-kicker mb-2">API Library</div>
@@ -161,7 +161,7 @@ export default function HomePage() {
           ))}
         </section>
       </main>
-    </DocsChrome>
+    </HomeChrome>
   );
 }
 

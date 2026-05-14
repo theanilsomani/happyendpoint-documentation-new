@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { getDocsTree } from '@/lib/page-tree';
@@ -60,6 +61,48 @@ export function DocsChrome({
     >
       <div className="he-shell-bg">{children}</div>
     </DocsLayout>
+  );
+}
+
+export function HomeChrome({ children }: { children: ReactNode }) {
+  return (
+    <HomeLayout
+      nav={{
+        title: (
+          <span className="he-brand">
+            <Image
+              alt="Happy Endpoint"
+              className="he-brand-logo"
+              height={56}
+              priority
+              src="/happyendpoint-com-logo.webp"
+              width={200}
+            />
+          </span>
+        ),
+        url: '/',
+      }}
+      links={[
+        {
+          type: 'icon',
+          label: 'GitHub',
+          text: 'GitHub',
+          url: 'https://github.com/happyendpointhq/',
+          icon: <GitHubLogo />,
+          external: true,
+        },
+        {
+          type: 'icon',
+          label: 'Twitter',
+          text: 'Twitter',
+          url: 'https://x.com/happyendpointhq',
+          icon: <X />,
+          external: true,
+        },
+      ]}
+    >
+      <div className="he-shell-bg">{children}</div>
+    </HomeLayout>
   );
 }
 
