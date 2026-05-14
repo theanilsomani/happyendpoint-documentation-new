@@ -100,15 +100,13 @@ a {
 }
 
 .fd-sidebar {
-  border-right: 1px solid oklch(27% 0.052 263) !important;
-  background: oklch(12.5% 0.043 263) !important;
+  border-right: 1px solid oklch(24% 0.012 263) !important;
+  background: oklch(8.5% 0.006 263) !important;
 }
 
 [role="complementary"] {
-  border-color: oklch(27% 0.052 263) !important;
-  background:
-    radial-gradient(circle at 18% 0%, oklch(30% 0.095 263 / 0.2), transparent 18rem),
-    linear-gradient(180deg, oklch(13.8% 0.046 263), oklch(11.8% 0.04 263)) !important;
+  border-color: oklch(24% 0.012 263) !important;
+  background: oklch(8.5% 0.006 263) !important;
 }
 
 .fd-nav a,
@@ -119,12 +117,12 @@ a {
 
 .fd-nav a:hover,
 .fd-sidebar a:hover {
-  background: var(--he-surface-2) !important;
+  background: oklch(17% 0.012 263) !important;
 }
 
 .fd-sidebar [data-active="true"],
 .fd-nav [data-active="true"] {
-  background: var(--he-surface-3) !important;
+  background: oklch(21% 0.018 263) !important;
   color: var(--he-text) !important;
 }
 
