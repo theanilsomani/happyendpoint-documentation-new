@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
-import { ExternalLink } from 'lucide-react';
+import { ArrowRight, Boxes, ExternalLink, FileJson, PlugZap, Server, Tags } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import type { ReactNode } from 'react';
 import { DocsChrome } from '@/components/DocsChrome';
 import { MarkdownBlock } from '@/components/MarkdownBlock';
 import { apiReferences, guides, site } from '@/lib/site';
 import { getApiInfo, getApiOperations } from '@/lib/openapi';
-import { Card, Cards } from 'fumadocs-ui/components/card';
-import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -64,41 +63,28 @@ export default async function GuideOrApiPage({ params }: Props) {
   const guide = guides.find((item) => item.slug === slug);
   if (!guide) notFound();
 
-  const guideJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: guide.title,
-    description: guide.description,
-    url: `${site.url}/${guide.slug}/`,
-    publisher: {
-      '@type': 'Organization',
-      name: 'Happy Endpoint',
-      url: site.url,
-    },
-  };
-
   return (
     <DocsChrome>
-      <script
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(guideJsonLd) }}
-        type="application/ld+json"
-      />
       <DocsPage>
         <DocsBody>
           <article className="prose prose-fd dark:prose-invert max-w-none">
-            <h1 className="text-4xl font-bold tracking-tight">{guide.title}</h1>
-            <p className="text-fd-muted-foreground mt-4 text-xl leading-relaxed">{guide.intro}</p>
+            <div className="he-kicker mb-4">Guide</div>
+            <h1 className="he-title">{guide.title}</h1>
+            <p className="he-lede mt-4">{guide.intro}</p>
 
-            <div className="mt-12 space-y-12">
+            <div className="mt-12 space-y-10">
               {guide.sections.map((section) => (
                 <section id={section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')} key={section.title}>
-                  <h2 className="text-2xl font-bold">{section.title}</h2>
-                  <div className="mt-6">
-                    <Cards>
-                      {section.items.map((item) => (
-                        <Card key={item.heading} title={item.heading} description={item.body} />
-                      ))}
-                    </Cards>
+                  <h2 className="text-xl font-bold text-fd-foreground">{section.title}</h2>
+                  <div className="mt-5 grid gap-4 md:grid-cols-2">
+                    {section.items.map((item) => (
+                      <div className="he-card" key={item.heading}>
+                        <h3 className="m-0 text-base font-bold text-fd-foreground">{item.heading}</h3>
+                        <p className="m-0 mt-2 text-sm leading-6 text-fd-muted-foreground">
+                          {item.body}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </section>
               ))}
@@ -117,46 +103,32 @@ function ApiOverview({ slug }: { slug: string }) {
   const operations = getApiOperations(slug);
   const tags = Array.from(new Set(operations.flatMap((operation) => operation.tags))).filter(Boolean);
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: info.title,
-    description: info.description,
-    applicationCategory: 'DeveloperApplication',
-    url: info.rapidApiUrl,
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-  };
-
   return (
     <DocsChrome currentApi={slug}>
-      <script
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        type="application/ld+json"
-      />
       <DocsPage>
         <DocsBody>
           <section>
-            <div className="text-fd-primary mb-4 font-semibold">{info.group}</div>
-            <h1 className="text-4xl font-bold tracking-tight">{info.title}</h1>
-            <p className="text-fd-muted-foreground mt-4 text-xl leading-relaxed">{info.description}</p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a className={buttonVariants({ variant: 'primary' })} href={info.rapidApiUrl} rel="noreferrer" target="_blank">
+            <div className="he-kicker mb-4">
+              <PlugZap aria-hidden="true" className="size-4" />
+              {info.group}
+            </div>
+            <h1 className="he-title">{info.title}</h1>
+            <p className="he-lede mt-4">{info.description}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a className="he-button-primary" href={info.rapidApiUrl} rel="noreferrer" target="_blank">
                 Open on RapidAPI <ExternalLink aria-hidden="true" className="ml-2 size-4" />
               </a>
-              <a className={buttonVariants({ variant: 'outline' })} href={`/openapi/${slug}.json`}>
+              <a className="he-button-secondary" href={`/openapi/${slug}.json`}>
+                <FileJson aria-hidden="true" className="size-4" />
                 OpenAPI JSON
               </a>
             </div>
           </section>
 
           <div className="mt-12 grid gap-4 sm:grid-cols-3">
-            <Fact label="Version" value={info.version} />
-            <Fact label="Server" value={info.serverUrl} />
-            <Fact label="Endpoints" value={String(operations.length)} />
+            <Fact icon={<Tags className="size-5" />} label="Version" value={info.version} />
+            <Fact icon={<Server className="size-5" />} label="Server" value={info.serverUrl} />
+            <Fact icon={<Boxes className="size-5" />} label="Endpoints" value={String(operations.length)} />
           </div>
 
           {tags.length ? (
@@ -171,21 +143,30 @@ function ApiOverview({ slug }: { slug: string }) {
 
           <section className="mt-16">
             <h2 className="text-2xl font-bold mb-6">Endpoints</h2>
-            <Cards>
+            <div className="grid gap-4 lg:grid-cols-2">
               {operations.map((operation) => (
-                <Card
-                  key={`${operation.method}-${operation.path}`}
+                <Link
+                  className="he-api-card min-h-[170px]"
                   href={`/${operation.apiSlug}/${operation.slug}/`}
-                  title={
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="font-semibold">{operation.summary}</span>
+                  key={`${operation.method}-${operation.path}`}
+                >
+                  <span>
+                    <span className="flex items-start justify-between gap-4">
+                      <span className="he-api-title">{operation.summary}</span>
                       <span className={`method method-${operation.method.toLowerCase()}`}>{operation.method}</span>
-                    </div>
-                  }
-                  description={operation.description}
-                />
+                    </span>
+                    <span className="he-api-desc block">{operation.description}</span>
+                  </span>
+                  <span className="he-api-meta">
+                    <span className="font-mono">{operation.path}</span>
+                    <span>
+                      <ArrowRight aria-hidden="true" className="size-4 text-fd-primary" />
+                      Details
+                    </span>
+                  </span>
+                </Link>
               ))}
-            </Cards>
+            </div>
           </section>
 
           {info.markdownDescription ? (
@@ -200,11 +181,16 @@ function ApiOverview({ slug }: { slug: string }) {
   );
 }
 
-function Fact({ label, value }: { label: string; value: string }) {
+function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
-    <div className="bg-fd-card border-fd-border rounded-xl border p-5">
-      <div className="text-fd-muted-foreground text-xs font-bold uppercase tracking-wider">{label}</div>
-      <div className="text-fd-foreground mt-2 font-mono">{value}</div>
+    <div className="he-stat">
+      <div className="he-stat-label">
+        {icon}
+        <span>{label}</span>
+      </div>
+      <div className={`he-stat-value ${value.length > 18 ? 'he-stat-value-long' : ''}`}>
+        {value}
+      </div>
     </div>
   );
 }

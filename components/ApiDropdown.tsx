@@ -26,16 +26,21 @@ export function ApiDropdown({ currentApiSlug }: { currentApiSlug?: string }) {
   const activeOption = options.find((opt) => opt.url !== '/' && pathname.startsWith(opt.url));
 
   return (
-    <div className="px-2 mb-6">
+    <div className="mb-6 px-2">
+      <div className="mb-2 px-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-fd-muted-foreground">
+        API Workspace
+      </div>
       <SidebarTabsDropdown
         options={options}
         placeholder={
           <div className="flex items-center gap-2">
-            <Boxes className="size-4 text-fd-muted-foreground" />
-            <span className="text-sm font-medium text-fd-muted-foreground">Select API...</span>
+            <Boxes className="size-4 text-fd-primary" />
+            <span className="text-sm font-semibold text-fd-foreground">
+              {activeOption?.title ?? 'All APIs'}
+            </span>
           </div>
         }
-        className="w-full h-auto py-2.5 bg-fd-secondary/30 hover:bg-fd-accent border-none shadow-none ring-1 ring-fd-border/50"
+        className="h-auto w-full rounded-lg border border-fd-border bg-fd-card py-2.5 shadow-none hover:bg-fd-accent"
       />
     </div>
   );

@@ -1,5 +1,6 @@
-import { GitFork } from 'lucide-react';
+import { GitFork, X } from 'lucide-react';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { getDocsTree } from '@/lib/page-tree';
 import { ApiDropdown } from '@/components/ApiDropdown';
@@ -17,8 +18,15 @@ export function DocsChrome({
       tree={getDocsTree(currentApi)}
       nav={{
         title: (
-          <span className="font-semibold flex items-center gap-2">
-            Happy Endpoint
+          <span className="he-brand">
+            <Image
+              alt="Happy Endpoint"
+              className="he-brand-logo"
+              height={58}
+              priority
+              src="/happyendpoint-com-logo.png"
+              width={220}
+            />
           </span>
         ),
         url: '/',
@@ -32,6 +40,14 @@ export function DocsChrome({
           icon: <GitFork />,
           external: true,
         },
+        {
+          type: 'icon',
+          label: 'Twitter',
+          text: 'Twitter',
+          url: 'https://x.com/happyendpointhq',
+          icon: <X />,
+          external: true,
+        },
       ]}
       sidebar={{
         defaultOpenLevel: 0,
@@ -42,7 +58,7 @@ export function DocsChrome({
         enabled: false,
       }}
     >
-      {children}
+      <div className="he-shell-bg">{children}</div>
     </DocsLayout>
   );
 }

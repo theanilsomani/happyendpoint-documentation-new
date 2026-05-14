@@ -45,21 +45,8 @@ export default async function EndpointPage({ params }: Props) {
   const operation = getOperation(slug, endpoint);
   if (!operation) notFound();
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'TechArticle',
-    headline: `${operation.method} ${operation.path}`,
-    description: operation.summary || operation.description,
-    url: endpointUrl(operation),
-    about: operation.apiTitle,
-  };
-
   return (
     <DocsChrome currentApi={slug}>
-      <script
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        type="application/ld+json"
-      />
       <DocsPage>
         <DocsTitle>{operation.summary}</DocsTitle>
         <DocsDescription>{operation.description}</DocsDescription>
